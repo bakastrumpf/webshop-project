@@ -1,6 +1,6 @@
 package com.iktpreobuka.project.entities;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,13 +41,13 @@ public class OfferEntity {
 			shape = JsonFormat.Shape.STRING,
 			pattern = "dd-MM-yyyy")
 	@JsonView(Views.Public.class)
-	private LocalDate offerCreated;
+	private Date offerCreated;
 	
 	@JsonFormat(
 			shape = JsonFormat.Shape.STRING,
 			pattern = "dd-MM-yyyy")
 	@JsonView(Views.Public.class)
-	private LocalDate offerExpires;
+	private Date offerExpires;
 	
 	@JsonView(Views.Public.class)
 	@Column(nullable = false)
@@ -85,7 +85,7 @@ public class OfferEntity {
 
 	
 
-	public OfferEntity(Integer id, String offerName, String offerDesc, LocalDate offerCreated, LocalDate offerExpires,
+	public OfferEntity(Integer id, String offerName, String offerDesc, Date offerCreated, Date offerExpires,
 			double regularPrice, double discountPrice, String imagePath, Integer availableOffers, Integer boughtOffers,
 			EOfferStatus offerStatus) {
 		super();
@@ -140,25 +140,25 @@ public class OfferEntity {
 
 
 
-	public LocalDate getOfferCreated() {
+	public Date getOfferCreated() {
 		return offerCreated;
 	}
 
 
 
-	public void setOfferCreated(LocalDate offerCreated) {
+	public void setOfferCreated(Date offerCreated) {
 		this.offerCreated = offerCreated;
 	}
 
 
 
-	public LocalDate getOfferExpires() {
+	public Date getOfferExpires() {
 		return offerExpires;
 	}
 
 
 
-	public void setOfferExpires(LocalDate offerExpires) {
+	public void setOfferExpires(Date offerExpires) {
 		this.offerExpires = offerExpires;
 	}
 
@@ -235,6 +235,8 @@ public class OfferEntity {
 	}
 
 
+
+	
 	
 
 }
