@@ -36,16 +36,6 @@ public class OfferController {
 		cal.setTime(new Date());
 		cal.add(Calendar.DATE, 5);
 		
-//		OfferEntity o1 = new OfferEntity();
-//		OfferEntity o2 = new OfferEntity();
-//		OfferEntity o3 = new OfferEntity();
-		
-		/*
-		 * OfferEntity(Integer id, String offerName, String offerDesc, LocalDate offerCreated, LocalDate offerExpires,
-			double regularPrice, double discountPrice, String imagePath, Integer availableOffers, Integer boughtOffers,
-			EOfferStatus offerStatus)
-		 */
-		
 		OfferEntity o1 = new OfferEntity(1,"2 tickets for Killers concert", "Enjoy!!!", new Date(),cal.getTime(),100000.00, 6500.00, " ", 10, 0, EOfferStatus.WAIT_FOR_APPROVING);
 		OfferEntity o2 = new OfferEntity(2, "VIVAX 24LE76T2", "Don't miss this fantastic offer!", new Date(),cal.getTime(), 200000.00, 16500.00, " ", 5, 0, EOfferStatus.WAIT_FOR_APPROVING);
 		OfferEntity o3 = new OfferEntity(3, "Dinner for two in Aqua Doria", "Excellent offer", new Date(), cal.getTime(), 6000.00, 3500.00, " ", 4, 0, EOfferStatus.WAIT_FOR_APPROVING);

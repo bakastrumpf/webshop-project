@@ -234,9 +234,6 @@ public class OfferEntity {
 		this.offerStatus = offerStatus;
 	}
 
-
-
-	
 	
 
 }
