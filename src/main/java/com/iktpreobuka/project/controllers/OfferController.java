@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Range;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -170,14 +171,30 @@ public class OfferController {
 	// TODO 3.9: REST endpoint koji omogućava pronalazak svih ponuda čija se akcijska cena nalazi u odgovarajućem rasponu
 	// putanja: /project/offers/findByPrice/{lowerPrice}/and/{upperPrice}
 	@RequestMapping(method = RequestMethod.GET, value = "/findByPrice/{lowerPrice}/and/{upperPrice}")
-	public OfferEntity getOfferByRange (@PathVariable double lowerPrice, @PathVariable double upperPrice) {
+	public List<OfferEntity> getOfferByRange (@PathVariable double lowerPrice, @PathVariable double upperPrice) {
+		List<OfferEntity> offersRange = new ArrayList<>();
 		for (OfferEntity oer : getDB()) {
+			// Range<Integer> myRange = Range.between(lowerPrice, upperPrice);
+//			if (oer.getDiscountPrice().isHigherThan(lowerPrice) && oer.getDiscountPrice().isLowerThan(upperPrice)) {
+//				offersRange.add(oer);
+//			}
+			
+			/*
+			 * nadjes cenu ponude, u if-u proveris da je veca od minimalne i manja od maksimalne i vratis te ponude
+			 * 
+			 * dakle napravis objekat, tj. listu :
+				List listaPonuda = new ArrayList();
+				
+				pa onda u petlji kad nadjes ofer, ubacis ga u listu :
+				listaPonuda.add(oer);
+				
+				i onda vracas tu listu na kraju:
+				return listaPonuda;
+			 */
 			
 			
 			
-			
-			
-			return oer;
+			return offersRange;
 		}
 		return null;
 	}
