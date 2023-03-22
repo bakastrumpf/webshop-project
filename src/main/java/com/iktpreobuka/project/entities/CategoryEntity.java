@@ -1,6 +1,7 @@
 package com.iktpreobuka.project.entities;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktpreobuka.project.security.Views;
@@ -13,6 +14,7 @@ import com.iktpreobuka.project.security.Views;
 
 public class CategoryEntity {
 	
+	@Id
 	@JsonView(Views.Public.class)
 	private Integer id;
 	
@@ -21,12 +23,11 @@ public class CategoryEntity {
 	private String categoryName;
 	
 	@JsonView(Views.Public.class)
-	//@Size(max = 50, message = "Category description must not exceed 50 characters.")
+	@Size(max = 50, message = "Category description must not exceed 50 characters.")
 	private String categoryDescription;
 	
 	public CategoryEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public CategoryEntity(Integer id, String categoryName, String categoryDescription) {

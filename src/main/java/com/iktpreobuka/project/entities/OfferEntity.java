@@ -22,8 +22,9 @@ U klasi OfferEntity u okviru projekta dodati odgovarajuća ograničenja
 
 @Entity
 public class OfferEntity {
+	
 	@Id
-	// @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonView(Views.Public.class)
 	@Column(nullable = false)
 	private Integer id;
@@ -34,7 +35,7 @@ public class OfferEntity {
 	
 	@Column(nullable = false)
 	@JsonView(Views.Public.class)
-	//@Size(min = 5, max = 20, message = "Offer description must contain between {min} and {max} characters.")
+	@Size(min = 5, max = 20, message = "Offer description must contain between {min} and {max} characters.")
 	private String offerDesc;
 	
 	@JsonFormat(
@@ -51,12 +52,12 @@ public class OfferEntity {
 	
 	@JsonView(Views.Public.class)
 	@Column(nullable = false)
-	//@Size(min = 1)
+	@Size(min = 1)
 	private double regularPrice;
 	
 	@JsonView(Views.Public.class)
 	@Column(nullable = false)
-	//@Size(min = 1)
+	@Size(min = 1)
 	private double discountPrice;
 	
 	@JsonView(Views.Public.class)
@@ -65,12 +66,12 @@ public class OfferEntity {
 	
 	@JsonView(Views.Public.class)
 	@Column(nullable = false)
-	//@Size(min = 0)
+	@Size(min = 0)
 	private Integer availableOffers;
 	
 	@JsonView(Views.Public.class)
 	@Column(nullable = false)
-	//@Size(min = 0)
+	@Size(min = 0)
 	private Integer boughtOffers;
 	
 	@JsonView(Views.Public.class)

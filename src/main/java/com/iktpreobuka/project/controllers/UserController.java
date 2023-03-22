@@ -62,13 +62,13 @@ public class UserController {
 	// putanja: /admin
 	@RequestMapping(method = RequestMethod.GET, path = "/admin")
 	private List<UserEntity> getDB() {
-	List<UserEntity> users = new ArrayList<>();
-		UserEntity u1 = new UserEntity(1, "Mira", "Mirić", "mira.miric@ff.uns.ac.rs", "mira", "mirka", EUserRole.ROLE_CUSTOMER);
-		UserEntity u2 = new UserEntity(2, "Dragam", "Dragić", "dragicd@uns.ac.rs",	"dejan", "debe", EUserRole.ROLE_CUSTOMER);
-		UserEntity u3 = new UserEntity(3, "Bojan", "Bojić", "bb@gmail.com",	"nikola", "niko", EUserRole.ROLE_CUSTOMER);
-		users.add(u1);
-		users.add(u2);
-		users.add(u3);
+		List<UserEntity> users = new ArrayList<>();
+			UserEntity u1 = new UserEntity(1, "Mira", "Mirić", "mira.miric@ff.uns.ac.rs", "mira", "mirka", EUserRole.ROLE_CUSTOMER);
+			UserEntity u2 = new UserEntity(2, "Dragam", "Dragić", "dragicd@uns.ac.rs",	"dejan", "debe", EUserRole.ROLE_CUSTOMER);
+			UserEntity u3 = new UserEntity(3, "Bojan", "Bojić", "bb@gmail.com",	"nikola", "niko", EUserRole.ROLE_CUSTOMER);
+			users.add(u1);
+			users.add(u2);
+			users.add(u3);
 	return users;
 	}
 	
@@ -98,10 +98,10 @@ public class UserController {
 	// TODO 1.4: REST endpoint koji vraća listu korisnika po vrednosti prosleđenog ID
 	// putanja: /project/users/{id}
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
-	public UserEntity getOne (@PathVariable Integer id) {
+	public List<UserEntity> getOne (@PathVariable Integer id) {
 		for (UserEntity ue : getDB()) {
 			if(ue.getId().equals(id))
-				return ue;
+				return (List<UserEntity>) ue;
 		}
 		return null;
 	}

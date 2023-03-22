@@ -1,6 +1,8 @@
 package com.iktpreobuka.project.entities;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,7 +15,6 @@ import com.iktpreobuka.project.security.Views;
 • user role može da ima sledeće vrednosti: ROLE_CUSTOMER, ROLE_ADMIN i ROLE_SELLER (koristiti enumeraciju), 
 dok svi ostali atributi, sem id-a treba da budu tekstualnog tipa
 	 */
-
 /*
 1.1
 U klasi UserEntity u okviru projekta dodati odgovarajuća ograničenja
@@ -22,7 +23,10 @@ U klasi UserEntity u okviru projekta dodati odgovarajuća ograničenja
 • atribut password ne sme imati manje od 5 karaktera i mora sadržati slova i brojeve
  */
 
+@Entity
 public class UserEntity {
+	
+	@Id
 	@JsonProperty("ID")
 	@JsonView(Views.Public.class)
 	@Column(nullable = false)
@@ -36,19 +40,19 @@ public class UserEntity {
 	@Column(nullable = false)
 	protected String lastName;
 	
-// ?	@JsonProperty("USERNAME")
+	@JsonProperty("USERNAME")
 	@JsonView(Views.Public.class)
-	//@NotBlank(message = "Username must not be blank nor null")
-	//@Size(min = 5, max = 20, message = "Last name must be string between {min} and {max}.")
+	@NotBlank(message = "Username must not be blank nor null")
+	@Size(min = 5, max = 20, message = "Last name must be string between {min} and {max}.")
 	@Column(nullable = false)
 	protected String username;
 	
 	@JsonView(Views.Private.class)
 	@JsonIgnore
 	@Column(nullable = false)
-	//@Min(value = 5, message = "Password must contain at least 5 characters")
-	//@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
-	//		message="Password must consist of letters and numbers.")
+	@Min(value = 5, message = "Password must contain at least 5 characters")
+	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
+			message="Password must consist of letters and numbers.")
 	protected String password;
 	
 	@JsonView(Views.Private.class)
