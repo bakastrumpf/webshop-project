@@ -182,7 +182,7 @@ public class OfferController {
 			/*
 			 * nadjes cenu ponude, u if-u proveris da je veca od minimalne i manja od maksimalne i vratis te ponude
 			 * 
-			 * dakle napravis objekat, tj. listu :
+			 * napravis objekat, tj. listu :
 				List listaPonuda = new ArrayList();
 				
 				pa onda u petlji kad nadjes ofer, ubacis ga u listu :
