@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktpreobuka.project.security.Views;
 
+import jakarta.validation.constraints.Size;
+
 /*
 1.2 U klasi CategoryEntity u okviru projekta dodati odgovarajuća ograničenja
 • atribut categoryName ne sme da ima null vrednost

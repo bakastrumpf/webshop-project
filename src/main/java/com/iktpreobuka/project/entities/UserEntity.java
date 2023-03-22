@@ -9,6 +9,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktpreobuka.project.security.Views;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 /*
 • 1.1 u paketu com.iktpreobuka.project.entities napraviti klasu UserEntity sa sledećim atributima:
 • id, first name, last name, username, password, email i user role
