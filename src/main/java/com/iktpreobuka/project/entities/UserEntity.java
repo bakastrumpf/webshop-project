@@ -1,8 +1,13 @@
 package com.iktpreobuka.project.entities;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -67,6 +72,20 @@ public class UserEntity {
 	@JsonView(Views.Admin.class)
 	@Column(nullable = false)
 	protected EUserRole euserRole;
+	
+	// • 2.2 povezati korisnika i ponudu
+	// • korisnik može da kreira više ponuda, a jednu ponudu kreira tačno jedan korisnik
+	@OneToMany(mappedBy = "offer", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<OfferEntity> offer;
+	
+	
+	/*
+	 * 	@OneToMany(mappedBy = "category", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<OfferEntity> offer;
+	 */
+	
 
 	public UserEntity() {
 		super();

@@ -1,8 +1,14 @@
 package com.iktpreobuka.project.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktpreobuka.project.security.Views;
 
@@ -27,6 +33,13 @@ public class CategoryEntity {
 	@JsonView(Views.Public.class)
 	@Size(max = 50, message = "Category description must not exceed 50 characters.")
 	private String categoryDescription;
+	
+	// • 2.1 povezati ponudu i kategoriju
+	// • jedna ponuda pripada tačno jednoj kategoriju, dok jedna kategorija ima više ponuda koje joj pripadaju
+	@OneToMany(mappedBy = "category", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<OfferEntity> offer;
+	
 	
 	public CategoryEntity() {
 		super();
@@ -62,6 +75,16 @@ public class CategoryEntity {
 	public void setCategoryDescription(String categoryDescription) {
 		this.categoryDescription = categoryDescription;
 	}
+
+	public List<OfferEntity> getOffer() {
+		return offer;
+	}
+
+	public void setOffer(List<OfferEntity> offer) {
+		this.offer = offer;
+	}
+	
+	
 	
 
 }

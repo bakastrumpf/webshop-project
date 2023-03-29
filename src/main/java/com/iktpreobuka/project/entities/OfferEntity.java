@@ -2,11 +2,15 @@ package com.iktpreobuka.project.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -81,8 +85,19 @@ public class OfferEntity {
 	@JsonView(Views.Public.class)
 	private EOfferStatus offerStatus;
 	
+	// • 2.1 povezati ponudu i kategoriju
+	// • jedna ponuda pripada tačno jednoj kategoriju, dok jedna kategorija ima više ponuda koje joj pripadaju
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "category")
+	private CategoryEntity category;
 	
-
+	// • 2.2 povezati korisnika i ponudu
+	// • korisnik može da kreira više ponuda, a jednu ponudu kreira tačno jedan korisniks
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinColumn(name = "user")
+	private UserEntity user;
+	
+	
 	public OfferEntity() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -238,6 +253,21 @@ public class OfferEntity {
 	public void setOfferStatus(EOfferStatus offerStatus) {
 		this.offerStatus = offerStatus;
 	}
+
+
+
+	public CategoryEntity getCategory() {
+		return category;
+	}
+
+
+
+	public void setCategory(CategoryEntity category) {
+		this.category = category;
+	}
+	
+	
+	
 
 	
 
