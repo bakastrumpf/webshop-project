@@ -50,6 +50,7 @@ public class CategoryController {
 	// TODO 2.4: REST endpoint koji omogućava dodavanje nove kategorije
 	// putanja: /project/categories
 	// vraća dodatu kategoriju
+	
 	@RequestMapping(method = RequestMethod.POST, value = "/")
 	public CategoryEntity createNewCategory(@RequestBody CategoryEntity newCategory) {
 		List<CategoryEntity> categories = getDB();
@@ -60,6 +61,17 @@ public class CategoryController {
 		
 		return newCategory;
 	}
+	
+	
+	// TODO 2.3: omogućiti dodavanje kategorije i korisnika koji je kreirao ponudu
+	// • izmeniti prethodnu putanju za dodavanje ponude
+	// • putanja /project/offers/{categoryId}/seller/{sellerId}
+	// • samo korisnik sa ulogom ROLE_SELLER ima pravo da bude postavljen kao onaj ko je kreirao/napravio ponudu 
+	// (u suprotnom ne dozvoliti kreiranje ponude); 
+	// Kao datum kreiranja ponude postaviti trenutni datum i ponuda ističe za 10 dana od dana kreiranja
+	
+	
+	
 	
 	
 	

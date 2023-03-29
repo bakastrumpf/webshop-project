@@ -26,44 +26,68 @@ import com.iktpreobuka.project.security.Views;
 
 @Entity
 public class BillEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@JsonView(Views.Public.class)
 	protected Integer id;
+	
 	@Column
 	@JsonView(Views.Admin.class)
 	protected Boolean paymentMade;
+	
 	@Column
 	@JsonView(Views.Admin.class)
 	protected Boolean paymentCancelled;
+	
 	@Column
 	@JsonFormat(
 			shape = JsonFormat.Shape.STRING,
 			pattern = "dd-MM-yyyy")
 	@JsonView(Views.Public.class)
 	protected LocalDate billCreated;
+	
+	// TODO 3.4 povezati ponudu i račun
+	// račun predstavlja kupovinu jedne ponude
+	// jedna ponuda se može nalaziti na više računa
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "offer")
 	@JsonView(Views.Private.class)
 	private OfferEntity offer;
+	
+	
+	// TODO 3.5 povezati korisnika i račun
+	// račun predstavlja kupovinu jedne ponude od strane jednog kupca
+	// jedan korisnik može imati više računa
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user")
 	@JsonView(Views.Private.class)
 	private UserEntity user;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "category")
 	@JsonView(Views.Admin.class)
 	private CategoryEntity category;
 
-	public BillEntity() {}
+	
+	public BillEntity() {
+		super();
+	}
 
 	public BillEntity(Integer id, Boolean paymentMade, 
-			Boolean paymentCancelled, LocalDate billCreated) {
+			Boolean paymentCancelled, 
+			LocalDate billCreated,
+			OfferEntity offer, 
+			UserEntity user, 
+			CategoryEntity category) {
 		super();
 		this.id = id;
 		this.paymentMade = paymentMade;
 		this.paymentCancelled = paymentCancelled;
 		this.billCreated = billCreated;
+		this.offer = offer;
+		this.user = user;
+		this.category = category;
 	}
 
 	public Integer getId() {
@@ -74,7 +98,7 @@ public class BillEntity {
 		this.id = id;
 	}
 
-	public Boolean isPaymentMade() {
+	public Boolean getPaymentMade() {
 		return paymentMade;
 	}
 
@@ -82,7 +106,7 @@ public class BillEntity {
 		this.paymentMade = paymentMade;
 	}
 
-	public Boolean isPaymentCanceled() {
+	public Boolean getPaymentCancelled() {
 		return paymentCancelled;
 	}
 
@@ -97,5 +121,33 @@ public class BillEntity {
 	public void setBillCreated(LocalDate billCreated) {
 		this.billCreated = billCreated;
 	}
+
+	public OfferEntity getOffer() {
+		return offer;
+	}
+
+	public void setOffer(OfferEntity offer) {
+		this.offer = offer;
+	}
+
+	public UserEntity getUser() {
+		return user;
+	}
+
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
+
+	public CategoryEntity getCategory() {
+		return category;
+	}
+
+	public void setCategory(CategoryEntity category) {
+		this.category = category;
+	}
+	
+	
+	
+	
 
 }

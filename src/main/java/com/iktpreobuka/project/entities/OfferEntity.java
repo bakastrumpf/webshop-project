@@ -1,6 +1,7 @@
 package com.iktpreobuka.project.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,8 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktpreobuka.project.security.Views;
 
@@ -97,17 +100,36 @@ public class OfferEntity {
 	@JoinColumn(name = "user")
 	private UserEntity user;
 	
+	// TODO 3.4 povezati ponudu i račun
+	// račun predstavlja kupovinu jedne ponude
+	// jedna ponuda se može nalaziti na više računa
+	@OneToMany(mappedBy = "offer", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<BillEntity> bill;
+	
+	// TODO 4.4 povezati ponudu i vaučer
+	// vaučer predstavlja račun na kome je uplata novca izvršena, pa poput računa, vaučer se odnosi na kupovinu jedne ponude
+	// jedna ponuda se može nalaziti na više vaučera
+	@OneToMany(mappedBy = "offer", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<VoucherEntity> voucher;
+	
 	
 	public OfferEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	
 
-	public OfferEntity(Integer id, String offerName, String offerDesc, Date offerCreated, Date offerExpires,
-			double regularPrice, double discountPrice, String imagePath, Integer availableOffers, Integer boughtOffers,
-			EOfferStatus offerStatus) {
+	public OfferEntity(Integer id, String offerName,
+			@Size(min = 5, max = 20, message = "Offer description must contain between {min} and {max} characters.") String offerDesc,
+			Date offerCreated, Date offerExpires, @Size(min = 1) double regularPrice,
+			@Size(min = 1) double discountPrice, String imagePath, @Size(min = 0) Integer availableOffers,
+			@Size(min = 0) Integer boughtOffers, 
+			EOfferStatus offerStatus, 
+			CategoryEntity category, 
+			UserEntity user,
+			List<BillEntity> bill, 
+			List<VoucherEntity> voucher) {
 		super();
 		this.id = id;
 		this.offerName = offerName;
@@ -120,8 +142,11 @@ public class OfferEntity {
 		this.availableOffers = availableOffers;
 		this.boughtOffers = boughtOffers;
 		this.offerStatus = offerStatus;
+		this.category = category;
+		this.user = user;
+		this.bill = bill;
+		this.voucher = voucher;
 	}
-
 
 
 	public Integer getId() {
@@ -129,11 +154,9 @@ public class OfferEntity {
 	}
 
 
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 
 
 	public String getOfferName() {
@@ -141,11 +164,9 @@ public class OfferEntity {
 	}
 
 
-
 	public void setOfferName(String offerName) {
 		this.offerName = offerName;
 	}
-
 
 
 	public String getOfferDesc() {
@@ -153,11 +174,9 @@ public class OfferEntity {
 	}
 
 
-
 	public void setOfferDesc(String offerDesc) {
 		this.offerDesc = offerDesc;
 	}
-
 
 
 	public Date getOfferCreated() {
@@ -165,11 +184,9 @@ public class OfferEntity {
 	}
 
 
-
 	public void setOfferCreated(Date offerCreated) {
 		this.offerCreated = offerCreated;
 	}
-
 
 
 	public Date getOfferExpires() {
@@ -177,11 +194,9 @@ public class OfferEntity {
 	}
 
 
-
 	public void setOfferExpires(Date offerExpires) {
 		this.offerExpires = offerExpires;
 	}
-
 
 
 	public double getRegularPrice() {
@@ -189,11 +204,9 @@ public class OfferEntity {
 	}
 
 
-
 	public void setRegularPrice(double regularPrice) {
 		this.regularPrice = regularPrice;
 	}
-
 
 
 	public double getDiscountPrice() {
@@ -201,11 +214,9 @@ public class OfferEntity {
 	}
 
 
-
 	public void setDiscountPrice(double discountPrice) {
 		this.discountPrice = discountPrice;
 	}
-
 
 
 	public String getImagePath() {
@@ -213,11 +224,9 @@ public class OfferEntity {
 	}
 
 
-
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
-
 
 
 	public Integer getAvailableOffers() {
@@ -225,11 +234,9 @@ public class OfferEntity {
 	}
 
 
-
 	public void setAvailableOffers(Integer availableOffers) {
 		this.availableOffers = availableOffers;
 	}
-
 
 
 	public Integer getBoughtOffers() {
@@ -237,11 +244,9 @@ public class OfferEntity {
 	}
 
 
-
 	public void setBoughtOffers(Integer boughtOffers) {
 		this.boughtOffers = boughtOffers;
 	}
-
 
 
 	public EOfferStatus getOfferStatus() {
@@ -249,11 +254,9 @@ public class OfferEntity {
 	}
 
 
-
 	public void setOfferStatus(EOfferStatus offerStatus) {
 		this.offerStatus = offerStatus;
 	}
-
 
 
 	public CategoryEntity getCategory() {
@@ -261,12 +264,40 @@ public class OfferEntity {
 	}
 
 
-
 	public void setCategory(CategoryEntity category) {
 		this.category = category;
 	}
-	
-	
+
+
+	public UserEntity getUser() {
+		return user;
+	}
+
+
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
+
+
+	public List<BillEntity> getBill() {
+		return bill;
+	}
+
+
+	public void setBill(List<BillEntity> bill) {
+		this.bill = bill;
+	}
+
+
+	public List<VoucherEntity> getVoucher() {
+		return voucher;
+	}
+
+
+	public void setVoucher(List<VoucherEntity> voucher) {
+		this.voucher = voucher;
+	}
+
 	
 
 	

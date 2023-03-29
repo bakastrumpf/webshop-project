@@ -117,6 +117,13 @@ public class OfferController {
 	}
 	
 	
+	// TODO 2.4 omogućiti izmenu kategorije ponude
+	// • izmeniti prethodnu putanju za izmenu ponude
+	// • putanja /project/offers/{id}/category/{categoryId}
+	
+	
+	
+	
 	
 	// TODO 3.6: REST endpoint koji omogućava brisanje postojeće ponude
 	// putanja: /project/offers/{id}

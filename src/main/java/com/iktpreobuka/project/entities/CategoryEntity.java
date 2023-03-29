@@ -34,8 +34,8 @@ public class CategoryEntity {
 	@Size(max = 50, message = "Category description must not exceed 50 characters.")
 	private String categoryDescription;
 	
-	// • 2.1 povezati ponudu i kategoriju
-	// • jedna ponuda pripada tačno jednoj kategoriju, dok jedna kategorija ima više ponuda koje joj pripadaju
+	// TODO 2.1 povezati ponudu i kategoriju
+	// jedna ponuda pripada tačno jednoj kategoriju, dok jedna kategorija ima više ponuda koje joj pripadaju
 	@OneToMany(mappedBy = "category", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<OfferEntity> offer;
@@ -45,46 +45,57 @@ public class CategoryEntity {
 		super();
 	}
 
-	public CategoryEntity(Integer id, String categoryName, String categoryDescription) {
+
+	public CategoryEntity(Integer id, String categoryName,
+			@Size(max = 50, message = "Category description must not exceed 50 characters.") String categoryDescription,
+			List<OfferEntity> offer) {
 		super();
 		this.id = id;
 		this.categoryName = categoryName;
 		this.categoryDescription = categoryDescription;
+		this.offer = offer;
 	}
+
 
 	public Integer getId() {
 		return id;
 	}
 
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 
 	public String getCategoryName() {
 		return categoryName;
 	}
 
+
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+
 
 	public String getCategoryDescription() {
 		return categoryDescription;
 	}
 
+
 	public void setCategoryDescription(String categoryDescription) {
 		this.categoryDescription = categoryDescription;
 	}
+
 
 	public List<OfferEntity> getOffer() {
 		return offer;
 	}
 
+
 	public void setOffer(List<OfferEntity> offer) {
 		this.offer = offer;
 	}
-	
-	
+
 	
 
 }

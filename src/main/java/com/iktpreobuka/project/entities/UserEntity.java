@@ -73,31 +73,41 @@ public class UserEntity {
 	@Column(nullable = false)
 	protected EUserRole euserRole;
 	
-	// • 2.2 povezati korisnika i ponudu
-	// • korisnik može da kreira više ponuda, a jednu ponudu kreira tačno jedan korisnik
-	@OneToMany(mappedBy = "offer", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	// TODO 2.2 povezati korisnika i ponudu
+	// korisnik može da kreira više ponuda, a jednu ponudu kreira tačno jedan korisnik
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<OfferEntity> offer;
 	
 	
-	/*
-	 * 	@OneToMany(mappedBy = "category", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	// TODO 3.5 povezati korisnika i račun
+	// račun predstavlja kupovinu jedne ponude od strane jednog kupca
+	// jedan korisnik može imati više računa
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<OfferEntity> offer;
-	 */
+	private List<BillEntity> bill;
 	
+	// TODO 4.5 povezati korisnika i vaučer
+	// vaučer se odnosi na kupovinu jedne ponude od strane jednog korisnika
+	// jedan korisnik može imati više vaučera
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<VoucherEntity> voucher;
 
+	
 	public UserEntity() {
 		super();
 	}
 
-	public UserEntity(Integer id, 
-			String firstName, 
-			String lastName, 
-			String username, 
-			String password, 
-			String email,
-			EUserRole euserRole) {
+	public UserEntity(Integer id, String firstName, String lastName,
+			@NotBlank(message = "Username must not be blank nor null") 
+			@Size(min = 5, max = 20, message = "Last name must be string between {min} and {max}.") String username,
+			@Min(value = 5, message = "Password must contain at least 5 characters") 
+			@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Password must consist of letters and numbers.") String password,
+			String email, EUserRole euserRole, 
+			List<OfferEntity> offer, 
+			List<BillEntity> bill,
+			List<VoucherEntity> voucher) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -106,6 +116,9 @@ public class UserEntity {
 		this.password = password;
 		this.email = email;
 		this.euserRole = euserRole;
+		this.offer = offer;
+		this.bill = bill;
+		this.voucher = voucher;
 	}
 
 	public Integer getId() {
@@ -163,6 +176,33 @@ public class UserEntity {
 	public void setEuserRole(EUserRole euserRole) {
 		this.euserRole = euserRole;
 	}
+
+	public List<OfferEntity> getOffer() {
+		return offer;
+	}
+
+	public void setOffer(List<OfferEntity> offer) {
+		this.offer = offer;
+	}
+
+	public List<BillEntity> getBill() {
+		return bill;
+	}
+
+	public void setBill(List<BillEntity> bill) {
+		this.bill = bill;
+	}
+
+	public List<VoucherEntity> getVoucher() {
+		return voucher;
+	}
+
+	public void setVoucher(List<VoucherEntity> voucher) {
+		this.voucher = voucher;
+	}
+
+	
+	
 	
 	
 }
