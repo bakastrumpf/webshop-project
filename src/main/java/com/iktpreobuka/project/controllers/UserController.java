@@ -63,9 +63,9 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET, path = "/admin")
 	private List<UserEntity> getDB() {
 		List<UserEntity> users = new ArrayList<>();
-			UserEntity u1 = new UserEntity(1, "Mira", "Mirić", "mira.miric@ff.uns.ac.rs", "mira", "mirka", EUserRole.ROLE_CUSTOMER);
-			UserEntity u2 = new UserEntity(2, "Dragam", "Dragić", "dragicd@uns.ac.rs",	"dejan", "debe", EUserRole.ROLE_CUSTOMER);
-			UserEntity u3 = new UserEntity(3, "Bojan", "Bojić", "bb@gmail.com",	"nikola", "niko", EUserRole.ROLE_CUSTOMER);
+			UserEntity u1 = new UserEntity(1, "Mira", "Mirić", "mira.miric@ff.uns.ac.rs", "mira", "mirka", EUserRole.ROLE_CUSTOMER, null, null, null);
+			UserEntity u2 = new UserEntity(2, "Dragam", "Dragić", "dragicd@uns.ac.rs",	"dejan", "debe", EUserRole.ROLE_CUSTOMER, null, null, null);
+			UserEntity u3 = new UserEntity(3, "Bojan", "Bojić", "bb@gmail.com",	"nikola", "niko", EUserRole.ROLE_CUSTOMER, null, null, null);
 			users.add(u1);
 			users.add(u2);
 			users.add(u3);

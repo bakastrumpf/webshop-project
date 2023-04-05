@@ -27,9 +27,9 @@ public class CategoryController {
 	// TODO 2.2 metoda getDB vraća listu svih kategorija
 	private List<CategoryEntity> getDB() {
 		List<CategoryEntity> categories = new ArrayList<CategoryEntity>();
-			CategoryEntity c1 = new CategoryEntity(1, "music", "music description");
-			CategoryEntity c2 = new CategoryEntity(2, "food", "food description");
-			CategoryEntity c3 = new CategoryEntity(3, "entertainment","entertainment description");
+			CategoryEntity c1 = new CategoryEntity(1, "music", "music description", null);
+			CategoryEntity c2 = new CategoryEntity(2, "food", "food description", null);
+			CategoryEntity c3 = new CategoryEntity(3, "entertainment","entertainment description", null);
 			categories.add(c1);
 			categories.add(c2);
 			categories.add(c3);	
