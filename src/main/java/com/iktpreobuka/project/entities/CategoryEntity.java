@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,7 +40,9 @@ public class CategoryEntity {
 	// jedna ponuda pripada tačno jednoj kategoriju, dok jedna kategorija ima više ponuda koje joj pripadaju
 	@OneToMany(mappedBy = "category", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
+	//@JoinColumn_?
 	private List<OfferEntity> offer;
+	
 	
 	
 	public CategoryEntity() {
@@ -46,7 +50,8 @@ public class CategoryEntity {
 	}
 
 
-	public CategoryEntity(Integer id, String categoryName,
+	public CategoryEntity(Integer id, 
+			String categoryName,
 			@Size(max = 50, message = "Category description must not exceed 50 characters.") String categoryDescription,
 			List<OfferEntity> offer) {
 		super();
@@ -95,7 +100,7 @@ public class CategoryEntity {
 	public void setOffer(List<OfferEntity> offer) {
 		this.offer = offer;
 	}
-
+	
 	
 
 }
