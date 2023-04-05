@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -75,7 +76,7 @@ public class UserEntity {
 	
 	// TODO 2.2 povezati korisnika i ponudu
 	// korisnik može da kreira više ponuda, a jednu ponudu kreira tačno jedan korisnik
-	@OneToMany(mappedBy = "user", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "creator", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<OfferEntity> offer;
 	
@@ -94,6 +95,9 @@ public class UserEntity {
 	@JsonIgnore
 	private List<VoucherEntity> voucher;
 
+	@Version
+	private Integer version;
+	
 	
 	public UserEntity() {
 		super();
@@ -199,6 +203,15 @@ public class UserEntity {
 
 	public void setVoucher(List<VoucherEntity> voucher) {
 		this.voucher = voucher;
+	}
+	
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 
 	

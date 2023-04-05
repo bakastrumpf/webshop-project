@@ -97,8 +97,8 @@ public class OfferEntity {
 	// • 2.2 povezati korisnika i ponudu
 	// • korisnik može da kreira više ponuda, a jednu ponudu kreira tačno jedan korisniks
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "user")
-	private UserEntity user;
+	@JoinColumn(name = "creator")
+	private UserEntity creator;
 	
 	// TODO 3.4 povezati ponudu i račun
 	// račun predstavlja kupovinu jedne ponude
@@ -127,7 +127,7 @@ public class OfferEntity {
 			@Size(min = 0) Integer boughtOffers, 
 			EOfferStatus offerStatus, 
 			CategoryEntity category, 
-			UserEntity user,
+			UserEntity creator,
 			List<BillEntity> bill, 
 			List<VoucherEntity> voucher) {
 		super();
@@ -143,7 +143,7 @@ public class OfferEntity {
 		this.boughtOffers = boughtOffers;
 		this.offerStatus = offerStatus;
 		this.category = category;
-		this.user = user;
+		this.creator = creator;
 		this.bill = bill;
 		this.voucher = voucher;
 	}
@@ -270,12 +270,12 @@ public class OfferEntity {
 
 
 	public UserEntity getUser() {
-		return user;
+		return creator;
 	}
 
 
-	public void setUser(UserEntity user) {
-		this.user = user;
+	public void setUser(UserEntity creator) {
+		this.creator = creator;
 	}
 
 
