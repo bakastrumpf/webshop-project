@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,6 +65,17 @@ public class BillController {
 	// putanja /project/bills/{offerId}/buyer/{buyerId} (dodavanje)
 	// putanja /project/bills/{id} (izmena i brisanje)
 	
+	@RequestMapping(path = "/{offerId}/buyer/{buyerId}", method = RequestMethod.POST)
+	public BillEntity addBill(@PathVariable Integer offerId, @PathVariable Integer buyerId, @RequestBody BillEntity newBill) {
+		if(offerRepository.existsById(offerId))
+			if(userRepository.existsById(buyerId)) {
+				newBill.setUser(userRepository.findById(buyerId).get());
+				newBill.setOffer(offerRepository.findById(offerId).get());
+				newBill.setBillCreated(LocalDate.now());
+				return billRepository.save(newBill);
+			}
+		return null;
+	}
 
 	
 	// TODO 3.7 kreirati REST endpoint za pronalazak svih računa određenog kupca

@@ -145,21 +145,20 @@ public class UserController {
 	public UserEntity modifyUser(@RequestBody UserEntity modifiedUser, 
 			@PathVariable Integer id) {
 		for (UserEntity ue : getDB()) {
-			if(!userRepository.existsById(id)) {
-				if(ue.getId().equals(id)) {
-					if(modifiedUser.getEmail() != null) {
-						ue.setEmail(modifiedUser.getEmail());
-					}
-					if(modifiedUser.getFirstName() != null) {
-						ue.setFirstName(modifiedUser.getFirstName());
-					}
-					if(modifiedUser.getLastName() != null) {
-						ue.setLastName(modifiedUser.getLastName());
-					}
-				return modifiedUser;
+			if(!userRepository.existsById(id)) 
+				return null;
+			if(ue.getId().equals(id)) {
+				if(modifiedUser.getEmail() != null) {
+					ue.setEmail(modifiedUser.getEmail());
 				}
+				if(modifiedUser.getFirstName() != null) {
+					ue.setFirstName(modifiedUser.getFirstName());
+				}
+				if(modifiedUser.getLastName() != null) {
+					ue.setLastName(modifiedUser.getLastName());
+				}
+			return modifiedUser;
 			}
-			return null;
 		}
 		return null;
 	}
