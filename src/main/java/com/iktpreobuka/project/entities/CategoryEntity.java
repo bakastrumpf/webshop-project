@@ -6,11 +6,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktpreobuka.project.security.Views;
 
@@ -22,6 +21,7 @@ import jakarta.validation.constraints.Size;
 • atribut categoryDescription ograničiti na maksimalno 50 karaktera
  */
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CategoryEntity {
 	
 	@Id
