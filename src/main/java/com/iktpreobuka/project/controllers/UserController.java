@@ -63,9 +63,9 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET, path = "/admin")
 	private List<UserEntity> getDB() {
 		List<UserEntity> users = new ArrayList<>();
-			UserEntity u1 = new UserEntity(1, "Mira", "Mirić", "mira.miric@ff.uns.ac.rs", "mira", "mirka", EUserRole.ROLE_CUSTOMER, null, null, null);
-			UserEntity u2 = new UserEntity(2, "Dragam", "Dragić", "dragicd@uns.ac.rs",	"dejan", "debe", EUserRole.ROLE_CUSTOMER, null, null, null);
-			UserEntity u3 = new UserEntity(3, "Bojan", "Bojić", "bb@gmail.com",	"nikola", "niko", EUserRole.ROLE_CUSTOMER, null, null, null);
+			UserEntity u1 = new UserEntity(1, "Mira", "Mirić", "mira.miric@ff.uns.ac.rs", "mira", "mirka", EUserRole.ROLE_CUSTOMER, null, null, null, null);
+			UserEntity u2 = new UserEntity(2, "Dragam", "Dragić", "dragicd@uns.ac.rs",	"dejan", "debe", EUserRole.ROLE_CUSTOMER, null, null, null, null);
+			UserEntity u3 = new UserEntity(3, "Bojan", "Bojić", "bb@gmail.com",	"nikola", "niko", EUserRole.ROLE_CUSTOMER, null, null, null, null);
 			users.add(u1);
 			users.add(u2);
 			users.add(u3);
@@ -142,20 +142,24 @@ public class UserController {
 	// ne menjati USER ROLE i PASSWORD
 	// ne dozvoljavamo promenu: USERNAME
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-	public UserEntity modifyUser(@RequestBody UserEntity modifiedUser, @PathVariable Integer id) {
+	public UserEntity modifyUser(@RequestBody UserEntity modifiedUser, 
+			@PathVariable Integer id) {
 		for (UserEntity ue : getDB()) {
-			if(ue.getId().equals(id)) {
-				if(modifiedUser.getEmail() != null) {
-					ue.setEmail(modifiedUser.getEmail());
+			if(!userRepository.existsById(id)) {
+				if(ue.getId().equals(id)) {
+					if(modifiedUser.getEmail() != null) {
+						ue.setEmail(modifiedUser.getEmail());
+					}
+					if(modifiedUser.getFirstName() != null) {
+						ue.setFirstName(modifiedUser.getFirstName());
+					}
+					if(modifiedUser.getLastName() != null) {
+						ue.setLastName(modifiedUser.getLastName());
+					}
+				return modifiedUser;
 				}
-				if(modifiedUser.getFirstName() != null) {
-					ue.setFirstName(modifiedUser.getFirstName());
-				}
-				if(modifiedUser.getLastName() != null) {
-					ue.setLastName(modifiedUser.getLastName());
-				}
-			return modifiedUser;
 			}
+			return null;
 		}
 		return null;
 	}
@@ -176,6 +180,16 @@ public class UserController {
 		}
 		return null;
 	}
+	
+	// Stefan:
+//	@RequestMapping(value = "/change/{id}/role/{role}")
+//	public UserEntity newUserRole(@PathVariable Integer id, @PathVariable EUserRole role) {
+//		if(!userRepository.existsById(id))
+//			return null;
+//		UserEntity user = userRepository.findById(id).get();
+//		user.setEuserRole(role);
+//		return userRepository.save(user);
+//	}
 	
 //	// Veljko:
 //	@PutMapping("/change/{id}/role/{role}")

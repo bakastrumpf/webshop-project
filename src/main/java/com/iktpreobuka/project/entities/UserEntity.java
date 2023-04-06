@@ -74,6 +74,13 @@ public class UserEntity {
 	@Column(nullable = false)
 	protected EUserRole euserRole;
 	
+	@Version
+	private Integer version;
+	
+	@OneToMany(mappedBy = "creator", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<UserEntity> creator;
+	
 	// TODO 2.2 povezati korisnika i ponudu
 	// korisnik može da kreira više ponuda, a jednu ponudu kreira tačno jedan korisnik
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
@@ -95,20 +102,20 @@ public class UserEntity {
 	@JsonIgnore
 	private List<VoucherEntity> voucher;
 
-	@Version
-	private Integer version;
-	
-	
+		
 	public UserEntity() {
 		super();
 	}
 
-	public UserEntity(Integer id, String firstName, String lastName,
-			@NotBlank(message = "Username must not be blank nor null") 
-			@Size(min = 5, max = 20, message = "Last name must be string between {min} and {max}.") String username,
-			@Min(value = 5, message = "Password must contain at least 5 characters") 
-			@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Password must consist of letters and numbers.") String password,
-			String email, EUserRole euserRole, 
+
+	public UserEntity(Integer id, 
+			String firstName, 
+			String lastName,
+			@NotBlank(message = "Username must not be blank nor null") @Size(min = 5, max = 20, message = "Last name must be string between {min} and {max}.") String username,
+			@Min(value = 5, message = "Password must contain at least 5 characters") @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Password must consist of letters and numbers.") String password,
+			String email, 
+			EUserRole euserRole, 
+			List<UserEntity> users, 
 			List<OfferEntity> offer, 
 			List<BillEntity> bill,
 			List<VoucherEntity> voucher) {
@@ -120,101 +127,132 @@ public class UserEntity {
 		this.password = password;
 		this.email = email;
 		this.euserRole = euserRole;
+		this.creator = creator;
 		this.offer = offer;
 		this.bill = bill;
 		this.voucher = voucher;
 	}
+
 
 	public Integer getId() {
 		return id;
 	}
 
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 
 	public String getFirstName() {
 		return firstName;
 	}
 
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 
 	public String getLastName() {
 		return lastName;
 	}
 
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 
 	public String getUsername() {
 		return username;
 	}
 
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 
 	public String getPassword() {
 		return password;
 	}
 
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 
 	public String getEmail() {
 		return email;
 	}
 
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 
 	public EUserRole getEuserRole() {
 		return euserRole;
 	}
 
+
 	public void setEuserRole(EUserRole euserRole) {
 		this.euserRole = euserRole;
 	}
 
-	public List<OfferEntity> getOffer() {
-		return offer;
-	}
-
-	public void setOffer(List<OfferEntity> offer) {
-		this.offer = offer;
-	}
-
-	public List<BillEntity> getBill() {
-		return bill;
-	}
-
-	public void setBill(List<BillEntity> bill) {
-		this.bill = bill;
-	}
-
-	public List<VoucherEntity> getVoucher() {
-		return voucher;
-	}
-
-	public void setVoucher(List<VoucherEntity> voucher) {
-		this.voucher = voucher;
-	}
-	
 
 	public Integer getVersion() {
 		return version;
 	}
 
+
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
 
-	
+
+	public List<UserEntity> getCreator() {
+		return creator;
+	}
+
+
+	public void setCreator(List<UserEntity> creator) {
+		this.creator = creator;
+	}
+
+
+	public List<OfferEntity> getOffer() {
+		return offer;
+	}
+
+
+	public void setOffer(List<OfferEntity> offer) {
+		this.offer = offer;
+	}
+
+
+	public List<BillEntity> getBill() {
+		return bill;
+	}
+
+
+	public void setBill(List<BillEntity> bill) {
+		this.bill = bill;
+	}
+
+
+	public List<VoucherEntity> getVoucher() {
+		return voucher;
+	}
+
+
+	public void setVoucher(List<VoucherEntity> voucher) {
+		this.voucher = voucher;
+	}
+
 	
 	
 	

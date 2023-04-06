@@ -92,6 +92,7 @@ public class OfferEntity {
 	// • jedna ponuda pripada tačno jednoj kategoriju, dok jedna kategorija ima više ponuda koje joj pripadaju
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "category")
+	@JsonIgnore
 	private CategoryEntity category;
 	
 	// • 2.2 povezati korisnika i ponudu

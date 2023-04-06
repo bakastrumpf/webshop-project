@@ -181,6 +181,8 @@ public class OfferController {
 	public List<OfferEntity> getOfferByRange (@PathVariable double lowerPrice, @PathVariable double upperPrice) {
 		List<OfferEntity> offersRange = new ArrayList<>();
 		for (OfferEntity oer : getDB()) {
+			// pozvati metodu finByPriceBetween iz repozitorijuma
+			
 			// Range<Integer> myRange = Range.between(lowerPrice, upperPrice);
 //			if (oer.getDiscountPrice().isHigherThan(lowerPrice) && oer.getDiscountPrice().isLowerThan(upperPrice)) {
 //				offersRange.add(oer);
