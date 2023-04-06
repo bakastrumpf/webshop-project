@@ -110,14 +110,14 @@ public class UserEntity {
 	}
 
 
+	
 	public UserEntity(Integer id, 
 			String firstName, 
 			String lastName,
 			@NotBlank(message = "Username must not be blank nor null") @Size(min = 5, max = 20, message = "Last name must be string between {min} and {max}.") String username,
 			@Min(value = 5, message = "Password must contain at least 5 characters") @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Password must consist of letters and numbers.") String password,
-			String email, 
-			EUserRole euserRole, 
-			List<UserEntity> users, 
+			String email, EUserRole euserRole, 
+			List<UserEntity> creator, 
 			List<OfferEntity> offer, 
 			List<BillEntity> bill,
 			List<VoucherEntity> voucher) {
@@ -134,6 +134,9 @@ public class UserEntity {
 		this.bill = bill;
 		this.voucher = voucher;
 	}
+
+
+
 
 
 	public Integer getId() {
