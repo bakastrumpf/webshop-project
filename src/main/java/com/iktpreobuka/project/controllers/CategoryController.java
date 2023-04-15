@@ -130,5 +130,12 @@ public class CategoryController {
 	}
 	
 	
+	
+	// TODO 3.1 ne dozvoliti brisanje onih kategorija za koje postoje neistekle ponude i računi
+	// • napisati metodu u servisu zaduženom za rad sa ponudama koja proverava da li postoje ponude za datu kategoriju 
+	// (kategoriju koja želi da se obriše)
+	// • napisati metodu u servisu zaduženom za rad sa računima koja proverava da li postoje aktivni računi za datu kategoriju
+	// • pozvati prethodno kreirane metode u metodi za brisanje kategorije u okviru CategoryController-a
+	
 
 }

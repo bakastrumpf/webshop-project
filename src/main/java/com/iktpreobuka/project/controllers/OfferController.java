@@ -207,5 +207,14 @@ public class OfferController {
 		return null;
 	}
 
+	
+	// TODO • 3.2 kreirati REST endpoint koji omogućava upload slike za kreiranu ponudu
+	// • putanja /project/offers/uploadImage/{id}
+	// • metoda treba da vrati izmenjenu ponudu, a ukoliko je prosleđen ID nepostojeće ponude vratiti null
+	
+	
+	// TODO • 3.3 ukoliko se ponuda proglasi isteklom potrebno je otkazati sve račune koji sadrže tu ponudu
+	// • u okviru servisa zaduženog za rad sa računima napisati metodu koja otkazuje sve račune odgovarajuće ponude
+	// • pozvati je u okviru metode za promenu statusa ponude u	OfferController-u
 
 }

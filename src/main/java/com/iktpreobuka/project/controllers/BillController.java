@@ -102,4 +102,25 @@ public class BillController {
 	// tada treba povećati broj	dostupnih ponuda ponude sa računa, 
 	// odnosno smanjiti broj kupljenih
 	
+	
+	
+	// TODO • 2.2 u metodi za dodavanje računa u okviru BillController-a potrebno je za izmenu broja dostupnih/kupljenih ponuda
+	// pozvati odgovarajuću metodu servisa zaduženog za rad sa ponudama
+	
+	
+	
+	// TODO • 2.3 u metodi za izmenu računa u okviru BillController-a potrebno je nakon što se račun proglasi otkazanim za
+	// izmenu broja dostupnih/kupljenih ponuda pozvati odgovarajuću metodu servisa zaduženog za rad sa ponudama
+	
+	
+	
+	// TODO • 2.4 u servisu zaduženom za rad sa računima, napisati metodu koja za prosleđene datume vraća račune koji se nalaze u datom periodu
+	// • pozvati je u okviru metode BillController-a za pronalazak svih računa koji su kreirani u odgovarajućem vremenskom periodu
+	
+	
+	
+	// TODO• 4.1 omogućiti kreiranje vaučera kada se atribut računa paymentMade postavi na true
+	// • u okviru servisa zaduženog za rad sa vaučerima, napisati metodu koja vrši kreiranje vaučera na osnovu prosleđenog računa
+	// • pozvati je u okviru metode za izmenu računa u BillController-u
+	
 }
