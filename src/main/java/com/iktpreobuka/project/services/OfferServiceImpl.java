@@ -1,5 +1,8 @@
 package com.iktpreobuka.project.services;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +40,41 @@ public class OfferServiceImpl implements OfferService {
 			offer.setBoughtOffers(offer.getBoughtOffers() +1);
 			offer.setAvailableOffers(offer.getAvailableOffers() -1);
 		}
+	}
+	
+	
+	@Override
+	public boolean hasCategoryNonExpirationOffers(Integer categoryId) {
 		
+		// VP
+		
+		List<OfferEntity> offers = offerRepository.findAllByCategoryId(categoryId);
+		LocalDate currentDate = LocalDate.now();
+		for(OfferEntity offer : offers) {
+			if(offer.getOfferExpires().isAfter(currentDate)) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+
+	@Override
+	public OfferEntity changeAvailableBoughtOfferBuy(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OfferEntity changeAvailableBoughtOfferCancelled(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isOfferExpires(Integer categoryId) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	// TODO • 3.3 ukoliko se ponuda proglasi isteklom potrebno je otkazati sve račune koji sadrže tu ponudu
