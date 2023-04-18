@@ -62,6 +62,12 @@ public class CategoryController {
 		return newCategory;
 	}
 	
+	// VP
+//	@PostMapping("/")
+//	public CategoryEntity addCategory(@RequestBody CategoryEntity category) {
+//		return categoryRepository.save(category);
+//	}
+	
 	
 	// TODO 2.3: omogućiti dodavanje kategorije i korisnika koji je kreirao ponudu
 	// • izmeniti prethodnu putanju za dodavanje ponude
@@ -95,6 +101,16 @@ public class CategoryController {
 		return null;
 	}
 	
+	// VP
+//	@PutMapping("{id}")
+//	public CategoryEntity updateCategory(@PathVariable Integer id, @RequestBody CategoryEntity) {
+//		CategoryEntity categoryDB = Validation.validateEntity(id, categoryRepository);
+//		categoryDB.setCategoryName(Validation.setIfNotNull(categoryDB.getCategoryName(), category.getCategoryName()));
+//		categoryDB.setCategoryDescription(Validation.setIfNotNull(categoryDB.getCategoryDescription(), category.getCategoryDescription()));
+//		
+//		return categoryRepository.save(categoryDB);
+//	}
+	
 
 	
 	// TODO 2.6: REST endpoint koji omogućava brisanje kategorije
@@ -115,6 +131,12 @@ public class CategoryController {
 		return null;
 	}	
 	
+	// VP
+//	@DeleteMapping("/{id}")
+//	public CategoryEntity deleteCategory(@PathVariable Integer id) {
+//		return categoryService.deleteCategory(id);
+//	}
+	
 	
 	
 	// TODO 2.7: REST endpoint koji vraća kategoriju po vrednosti prosleđenog ID
@@ -128,6 +150,12 @@ public class CategoryController {
 		}
 		return null;
 	}
+	
+	// VP
+//	@GetMapping("/{id}")
+//	pubic Optional<CategoryEntity> findCategoryById (@PathVariable Integer id) {
+//		return categoryRepository.findById(id);
+//	}
 	
 	
 	
