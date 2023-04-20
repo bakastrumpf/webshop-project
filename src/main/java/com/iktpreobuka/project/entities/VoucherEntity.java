@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -62,17 +63,16 @@ public class VoucherEntity {
 	
 	@JsonView(Views.Admin.class)
 	private BillEntity bill;
+	
+	@Version
+	private Integer version;
 
 	public VoucherEntity() {
 		super();
 	}
 
-	public VoucherEntity(Integer id, 
-			LocalDate expiryDate, 
-			Boolean isUsed, 
-			OfferEntity offer, 
-			UserEntity user,
-			BillEntity bill) {
+	public VoucherEntity(Integer id, LocalDate expiryDate, Boolean isUsed, OfferEntity offer, UserEntity user,
+			BillEntity bill, Integer version) {
 		super();
 		this.id = id;
 		this.expiryDate = expiryDate;
@@ -130,7 +130,14 @@ public class VoucherEntity {
 		this.bill = bill;
 	}
 
-	
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	
 	
 
