@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -76,21 +78,69 @@ public class BillController {
 			}
 		return null;
 	}
+	
+	
+	// DB
+//	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+//	public BillEntity modifyBill(@PathVariable Integer id, @RequestBody @DateTimeFormat(iso = ISO.DATE) BillEntity newBill){
+//		if (!billRepository.existsById(id))
+//			return null;
+//		BillEntity bill = billRepository.findById(id).get();
+//		if(newBill.getBuyer() != null)
+//			bill.setBuyer(newBill.getBuyer());
+//		if(newBill.getOffer() != null)
+//			bill.setOffer(newBill.getOffer());
+//		if(newBill.isPaymentCancelled() == true) {
+//			bill.setPaymentCancelled(true);
+//			bill.setOffer(offerService.changeAvailableBoughtOfferCancelled(bill.getOffer().getId()));
+//		} else
+//			bill.setPaymentCancelled(false);
+//		if(newBill.getBillCreated() != null)
+//			bill.setBillCreated(newBill.getBillCreated());
+//		
+//		return billRepository.save(bill);
+//		
+//	}
+	
+	
+	// DB
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	public BillEntity deleteBill(@PathVariable Integer id) {
+		if (!billRepository.existsById(id))
+			return null;
+		BillEntity bill = billRepository.findById(id).get();
+		billRepository.delete(bill);
+		return bill;
+	}
 
 	
 	// TODO 3.7 kreirati REST endpoint za pronalazak svih računa određenog kupca
 	// putanja /project/bills/findByBuyer/{buyerId}
+	// DB
+	@RequestMapping(method = RequestMethod.GET, value = "/{buyerId}")
+	public List<BillEntity> findBuyerBills(@PathVariable Integer buyerId) {
+		return billRepository.findByBuyerId(buyerId);
+	}
 	
 	
 	
 	// TODO 3.8 kreirati REST endpoint za pronalazak svih računa određene kategorije
 	// putanja /project/bills/findByCategory/{categoryId}
-	
+	// DB
+	@RequestMapping(method = RequestMethod.GET, value = "/{categoryId}")
+	public List<BillEntity> findBillsByOfferCategory(@PathVariable Integer categoryId) {
+		return billRepository.findByOfferCategoryId(categoryId);
+	}
 	
 	
 	// TODO 3.9 kreirati REST endpoint za pronalazak svih računa koji su kreirani u odgovarajućem vremenskom periodu
 	// putanja /project/bills/findByDate/{startDate}/and/{endDate}
-	
+	// DB
+	@RequestMapping(method = RequestMethod.GET, value = "/findByDate/{startDate}/and/{endDate}")
+	public List<BillEntity> findBillsBetween(@PathVariable @DateTimeFormat(iso = ISO.DATE) LocalDate startDate, 
+			@PathVariable @DateTimeFormat(iso = ISO.DATE) LocalDate endDate){
+		return billRepository.findByBillCreatedBetween(startDate, endDate);
+	}
 	
 	
 	// TODO 5.1 proširiti metodu za dodavanje računa tako da se smanji broj dostupnih ponuda ponude sa računa, 
