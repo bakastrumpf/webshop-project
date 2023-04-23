@@ -8,4 +8,6 @@ public interface BillService {
 	
 	public BillEntity updateBill(Integer id, BillEntity bill);
 
+	boolean areActiveBills(Integer categoryId);
+
 }
