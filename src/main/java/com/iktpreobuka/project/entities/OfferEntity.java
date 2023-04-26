@@ -91,14 +91,14 @@ public class OfferEntity {
 	private EOfferStatus offerStatus;
 	
 	// • 2.1 povezati ponudu i kategoriju
-	// • jedna ponuda pripada tačno jednoj kategoriju, dok jedna kategorija ima više ponuda koje joj pripadaju
+	// • jedna ponuda pripada tačno jednoj kategoriji, dok jedna kategorija ima više ponuda koje joj pripadaju
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "category")
 	@JsonIgnore
 	private CategoryEntity category;
 	
 	// • 2.2 povezati korisnika i ponudu
-	// • korisnik može da kreira više ponuda, a jednu ponudu kreira tačno jedan korisniks
+	// • korisnik može da kreira više ponuda, a jednu ponudu kreira tačno jedan korisnik
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "creator")
 	private UserEntity creator;
@@ -118,21 +118,19 @@ public class OfferEntity {
 	private List<VoucherEntity> voucher;
 	
 	
+	
 	public OfferEntity() {
 		super();
 	}
+
 
 
 	public OfferEntity(Integer id, String offerName,
 			@Size(min = 5, max = 20, message = "Offer description must contain between {min} and {max} characters.") String offerDesc,
 			Date offerCreated, Date offerExpires, @Size(min = 1) double regularPrice,
 			@Size(min = 1) double discountPrice, String imagePath, @Size(min = 0) Integer availableOffers,
-			@Size(min = 0) Integer boughtOffers, 
-			EOfferStatus offerStatus, 
-			CategoryEntity category, 
-			UserEntity creator,
-			List<BillEntity> bill, 
-			List<VoucherEntity> voucher) {
+			@Size(min = 0) Integer boughtOffers, EOfferStatus offerStatus, CategoryEntity category, UserEntity creator,
+			List<BillEntity> bill, List<VoucherEntity> voucher) {
 		super();
 		this.id = id;
 		this.offerName = offerName;
@@ -150,6 +148,7 @@ public class OfferEntity {
 		this.bill = bill;
 		this.voucher = voucher;
 	}
+
 
 
 	public Integer getId() {
@@ -157,9 +156,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 
 
 	public String getOfferName() {
@@ -167,9 +168,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setOfferName(String offerName) {
 		this.offerName = offerName;
 	}
+
 
 
 	public String getOfferDesc() {
@@ -177,9 +180,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setOfferDesc(String offerDesc) {
 		this.offerDesc = offerDesc;
 	}
+
 
 
 	public Date getOfferCreated() {
@@ -187,9 +192,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setOfferCreated(Date offerCreated) {
 		this.offerCreated = offerCreated;
 	}
+
 
 
 	public Date getOfferExpires() {
@@ -197,9 +204,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setOfferExpires(Date offerExpires) {
 		this.offerExpires = offerExpires;
 	}
+
 
 
 	public double getRegularPrice() {
@@ -207,9 +216,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setRegularPrice(double regularPrice) {
 		this.regularPrice = regularPrice;
 	}
+
 
 
 	public double getDiscountPrice() {
@@ -217,9 +228,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setDiscountPrice(double discountPrice) {
 		this.discountPrice = discountPrice;
 	}
+
 
 
 	public String getImagePath() {
@@ -227,9 +240,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
+
 
 
 	public Integer getAvailableOffers() {
@@ -237,9 +252,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setAvailableOffers(Integer availableOffers) {
 		this.availableOffers = availableOffers;
 	}
+
 
 
 	public Integer getBoughtOffers() {
@@ -247,9 +264,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setBoughtOffers(Integer boughtOffers) {
 		this.boughtOffers = boughtOffers;
 	}
+
 
 
 	public EOfferStatus getOfferStatus() {
@@ -257,9 +276,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setOfferStatus(EOfferStatus offerStatus) {
 		this.offerStatus = offerStatus;
 	}
+
 
 
 	public CategoryEntity getCategory() {
@@ -267,19 +288,23 @@ public class OfferEntity {
 	}
 
 
+
 	public void setCategory(CategoryEntity category) {
 		this.category = category;
 	}
 
 
-	public UserEntity getUser() {
+
+	public UserEntity getCreator() {
 		return creator;
 	}
 
 
-	public void setUser(UserEntity creator) {
+
+	public void setCreator(UserEntity creator) {
 		this.creator = creator;
 	}
+
 
 
 	public List<BillEntity> getBill() {
@@ -287,9 +312,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setBill(List<BillEntity> bill) {
 		this.bill = bill;
 	}
+
 
 
 	public List<VoucherEntity> getVoucher() {
@@ -297,9 +324,11 @@ public class OfferEntity {
 	}
 
 
+
 	public void setVoucher(List<VoucherEntity> voucher) {
 		this.voucher = voucher;
 	}
+
 
 	
 
