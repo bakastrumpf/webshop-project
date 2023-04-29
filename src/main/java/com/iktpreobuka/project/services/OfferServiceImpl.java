@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iktpreobuka.project.entities.OfferEntity;
+import com.iktpreobuka.project.repositories.CategoryRepository;
 import com.iktpreobuka.project.repositories.OfferRepository;
 
 @Service
@@ -14,6 +15,9 @@ public class OfferServiceImpl implements OfferService {
 	
 	@Autowired
 	OfferRepository offerRepository;
+	
+	@Autowired
+	CategoryRepository categoryRepository;
 
 	@Override
 	public void setNumberOfBoughtAndAvailableOffersByPaymentCancelled(Integer id, boolean paymentCancelled) {
@@ -61,21 +65,41 @@ public class OfferServiceImpl implements OfferService {
 		
 	}
 
+	// DB
 	@Override
 	public OfferEntity changeAvailableBoughtOfferBuy(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!offerRepository.existsById(id))
+			return null;
+		OfferEntity offer = offerRepository.findById(id).get();
+		offer.setAvailableOffers(offer.getAvailableOffers() -1);
+		offer.setBoughtOffers(offer.getBoughtOffers() +1);
+		offerRepository.save(offer);
+		return offer;
 	}
 
+	// DB
 	@Override
 	public OfferEntity changeAvailableBoughtOfferCancelled(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		if (!offerRepository.existsById(id))
+			return null;
+		OfferEntity offer = offerRepository.findById(id).get();
+		offer.setAvailableOffers(offer.getAvailableOffers() +1);
+		offer.setBoughtOffers(offer.getBoughtOffers() -1);
+		offerRepository.save(offer);
+		return offer;
 	}
 
 	@Override
 	public boolean isOfferExpires(Integer categoryId) {
-		// TODO Auto-generated method stub
+		if(categoryRepository.existsById(categoryId)) {
+			List<OfferEntity> offers = offerRepository.findAllByCategoryId(categoryId);
+			LocalDate now = LocalDate.now();
+			for (OfferEntity offer : offers) {
+				if (offer.getOfferExpires().isAfter(now))
+					return true;
+				return false;
+			}
+		}
 		return false;
 	}
 	
