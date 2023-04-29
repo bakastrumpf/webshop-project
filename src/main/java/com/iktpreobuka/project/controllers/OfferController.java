@@ -128,32 +128,53 @@ public class OfferController {
 	// putanja: /project/offers/{id}
 	// vraća NULL ako je prosleđen ID koji ne pripada nijednoj kategoriji
 	// vraća podatke o obrisanoj ponudi
+	
+	// first version:
+//	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+//	public OfferEntity deleteOffer (@PathVariable Integer id) {
+//		List<OfferEntity> offers = getDB();
+//		Iterator<OfferEntity> itoff = offers.iterator();
+//		while (itoff.hasNext()) {
+//			OfferEntity offent = itoff.next();
+//			if (offent.getId().equals(id)) {
+//				itoff.remove();
+//				return offent;
+//			}
+//		}
+//		return null;
+//	}
+	
+	// DB version: 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	public OfferEntity deleteOffer (@PathVariable Integer id) {
-		List<OfferEntity> offers = getDB();
-		Iterator<OfferEntity> itoff = offers.iterator();
-		while (itoff.hasNext()) {
-			OfferEntity offent = itoff.next();
-			if (offent.getId().equals(id)) {
-				itoff.remove();
-				return offent;
-			}
-		}
-		return null;
+		if (!offerRepository.existsById(id))
+			return null;
+		OfferEntity offer = offerRepository.findById(id).get();
+		offerRepository.delete(offer);
+		return offer;
 	}
-	
 	
 	
 	// TODO 3.7: REST endpoint koji vraća ponudu po vrednosti prosleđenog ID-a
 	// putanja: /project/offers/{id}
 	// vraća NULL ako je prosleđen ID koji ne pripada nijednoj kategoriji
+	
+	// first version:
+//	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
+//	public OfferEntity getById (@PathVariable Integer id) {
+//		for (OfferEntity oe : getDB()) {
+//			if (oe.getId().equals(id))
+//				return oe;
+//		}
+//		return null;
+//	}
+	
+	// DB version:
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
 	public OfferEntity getById (@PathVariable Integer id) {
-		for (OfferEntity oe : getDB()) {
-			if (oe.getId().equals(id))
-				return oe;
-		}
-		return null;
+		if (!offerRepository.existsById(id))
+			return null;
+		return offerRepository.findById(id).get();
 	}
 	
 
@@ -161,50 +182,61 @@ public class OfferController {
 	// TODO 3.8: REST endpoint koji omogućava promenu vrednosti atributa OFFER STATUS postojeće ponude
 	// putanja: /project/offers/changeOffer/{id}/status/{status}
 	// vraća NULL ako je prosleđen ID koji ne pripada nijednoj kategoriji
+	
+	// first version:
+//	@RequestMapping(method = RequestMethod.PUT, value = "/changeOffer/{id}/status/{status}")
+//	public OfferEntity modifyOfferStatus (@PathVariable Integer id,  @PathVariable EOfferStatus status) {
+//		for (OfferEntity oe : getDB()) {
+//			if (oe.getId().equals(id)) {
+//				oe.setOfferStatus(status);
+//			}
+//			return oe;
+//		}
+//		return null;
+//	}
+	
+	// DB version
 	@RequestMapping(method = RequestMethod.PUT, value = "/changeOffer/{id}/status/{status}")
 	public OfferEntity modifyOfferStatus (@PathVariable Integer id,  @PathVariable EOfferStatus status) {
-		for (OfferEntity oe : getDB()) {
-			if (oe.getId().equals(id)) {
-				oe.setOfferStatus(status);
-			}
-			return oe;
-		}
-		return null;
+		if (!offerRepository.existsById(id))
+			return null;
+		OfferEntity offer = offerRepository.findById(id).get();
+		offer.setOfferStatus(status);
+		return offerRepository.save(offer);
 	}
 
 
 	
 	// TODO 3.9: REST endpoint koji omogućava pronalazak svih ponuda čija se akcijska cena nalazi u odgovarajućem rasponu
 	// putanja: /project/offers/findByPrice/{lowerPrice}/and/{upperPrice}
-	@RequestMapping(method = RequestMethod.GET, value = "/findByPrice/{lowerPrice}/and/{upperPrice}")
-	public List<OfferEntity> getOfferByRange (@PathVariable double lowerPrice, @PathVariable double upperPrice) {
-		List<OfferEntity> offersRange = new ArrayList<>();
-		for (OfferEntity oer : getDB()) {
-			// pozvati metodu finByPriceBetween iz repozitorijuma
-			
-			// Range<Integer> myRange = Range.between(lowerPrice, upperPrice);
-//			if (oer.getDiscountPrice().isHigherThan(lowerPrice) && oer.getDiscountPrice().isLowerThan(upperPrice)) {
-//				offersRange.add(oer);
-//			}
-			
-			/*
-			 * nadjes cenu ponude, u if-u proveris da je veca od minimalne i manja od maksimalne i vratis te ponude
-			 * 
-			 * napravis objekat, tj. listu :
-				List listaPonuda = new ArrayList();
-				
-				pa onda u petlji kad nadjes ofer, ubacis ga u listu :
-				listaPonuda.add(oer);
-				
-				i onda vracas tu listu na kraju:
-				return listaPonuda;
-			 */
-			
-			
-			
-			return offersRange;
-		}
-		return null;
+//	@RequestMapping(method = RequestMethod.GET, value = "/findByPrice/{lowerPrice}/and/{upperPrice}")
+//	public List<OfferEntity> getOfferByRange (@PathVariable double lowerPrice, @PathVariable double upperPrice) {
+//		List<OfferEntity> offersRange = new ArrayList<>();
+//		for (OfferEntity oer : getDB()) {
+//			// pozvati metodu finByPriceBetween iz repozitorijuma
+//			
+//			// Range<Integer> myRange = Range.between(lowerPrice, upperPrice);
+////			if (oer.getDiscountPrice().isHigherThan(lowerPrice) && oer.getDiscountPrice().isLowerThan(upperPrice)) {
+////				offersRange.add(oer);
+////			}
+//			
+//			/*
+//			 * nadjes cenu ponude, u if-u proveris da je veca od minimalne i manja od maksimalne i vratis te ponude
+//			 * napravis objekat, tj. listu :
+//				List listaPonuda = new ArrayList();
+//				pa onda u petlji kad nadjes ofer, ubacis ga u listu :
+//				listaPonuda.add(oer);
+//				i onda vracas tu listu na kraju:
+//				return listaPonuda;
+//			 */
+//			return offersRange;
+//		}
+//		return null;
+//	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/findByPrice/{discountPrice}/and/{regularPrice}")
+	public List<OfferEntity> getByPrice (@PathVariable Double discountPrice, @PathVariable Double regularPrice) {
+		return offerRepository.findByDiscountPriceBetween(discountPrice, regularPrice);
 	}
 
 	
