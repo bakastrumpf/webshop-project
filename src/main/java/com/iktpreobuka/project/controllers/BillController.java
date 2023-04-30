@@ -18,13 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iktpreobuka.project.entities.BillEntity;
+import com.iktpreobuka.project.entities.UserEntity;
 import com.iktpreobuka.project.repositories.BillRepository;
 import com.iktpreobuka.project.repositories.OfferRepository;
 import com.iktpreobuka.project.repositories.UserRepository;
-
-//import com.iktpreobuka.dataaccess.entities.UserEntity;
-//import com.iktpreobuka.dataaccess.repositories.AddressRepository;
-//import com.iktpreobuka.dataaccess.repositories.UserRepository;
+import com.iktpreobuka.project.services.OfferService;
 
 @RestController
 @RequestMapping("/project/bills")
@@ -42,12 +40,13 @@ public class BillController {
 	@Autowired
 	private BillRepository billRepository;
 	
+	
 	@RequestMapping(method = RequestMethod.GET, path = "/")
 	public List<BillEntity> getAll() {
 		return (List<BillEntity>) billRepository.findAll();
 	}
 	
-
+	// TODO: svu logiku iz kontrolera prebaciti u servis!!! 
 	
 	@RequestMapping(method = RequestMethod.POST) 
 	public BillEntity createBill(@RequestParam LocalDate date, 
@@ -67,40 +66,61 @@ public class BillController {
 	// putanja /project/bills/{offerId}/buyer/{buyerId} (dodavanje)
 	// putanja /project/bills/{id} (izmena i brisanje)
 	
+	// first version
+//	@RequestMapping(path = "/{offerId}/buyer/{buyerId}", method = RequestMethod.POST)
+//	public BillEntity addBill(@PathVariable Integer offerId, @PathVariable Integer buyerId, @RequestBody BillEntity newBill) {
+//		if(offerRepository.existsById(offerId))
+//			if(userRepository.existsById(buyerId)) {
+//				newBill.setUser(userRepository.findById(buyerId).get());
+//				newBill.setOffer(offerRepository.findById(offerId).get());
+//				newBill.setBillCreated(LocalDate.now());
+//				return billRepository.save(newBill);
+//			}
+//		return null;
+//	}
+	
+	// DB version
 	@RequestMapping(path = "/{offerId}/buyer/{buyerId}", method = RequestMethod.POST)
-	public BillEntity addBill(@PathVariable Integer offerId, @PathVariable Integer buyerId, @RequestBody BillEntity newBill) {
-		if(offerRepository.existsById(offerId))
-			if(userRepository.existsById(buyerId)) {
-				newBill.setUser(userRepository.findById(buyerId).get());
-				newBill.setOffer(offerRepository.findById(offerId).get());
-				newBill.setBillCreated(LocalDate.now());
-				return billRepository.save(newBill);
-			}
-		return null;
+	public BillEntity addBill(@PathVariable Integer offerId, 
+			@PathVariable Integer buyerId, 
+			@RequestBody @DateTimeFormat(iso = ISO.DATE) BillEntity newBill) {
+		if (!userRepository.existsById(buyerId))
+			return null;
+		UserEntity buyer = userRepository.findById(buyerId).get();
+		if (!newBill.isPaymentMade())
+			return null;
+		BillEntity bill = new BillEntity();
+		bill.setOffer(offerService.changeAvailableBoughtOfferBuy(offerId));
+		bill.setBuyer(buyer);
+		bill.setPaymentMade(true);
+		bill.setPaymentCancelled(false);
+		bill.setBillCreated(newBill.getBillCreated());
+		
+		return billRepository.save(bill);
 	}
 	
 	
 	// DB
-//	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-//	public BillEntity modifyBill(@PathVariable Integer id, @RequestBody @DateTimeFormat(iso = ISO.DATE) BillEntity newBill){
-//		if (!billRepository.existsById(id))
-//			return null;
-//		BillEntity bill = billRepository.findById(id).get();
-//		if(newBill.getBuyer() != null)
-//			bill.setBuyer(newBill.getBuyer());
-//		if(newBill.getOffer() != null)
-//			bill.setOffer(newBill.getOffer());
-//		if(newBill.isPaymentCancelled() == true) {
-//			bill.setPaymentCancelled(true);
-//			bill.setOffer(offerService.changeAvailableBoughtOfferCancelled(bill.getOffer().getId()));
-//		} else
-//			bill.setPaymentCancelled(false);
-//		if(newBill.getBillCreated() != null)
-//			bill.setBillCreated(newBill.getBillCreated());
-//		
-//		return billRepository.save(bill);
-//		
-//	}
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+	public BillEntity modifyBill(@PathVariable Integer id, @RequestBody @DateTimeFormat(iso = ISO.DATE) BillEntity newBill){
+		if (!billRepository.existsById(id))
+			return null;
+		BillEntity bill = billRepository.findById(id).get();
+		if(newBill.getBuyer() != null)
+			bill.setBuyer(newBill.getBuyer());
+		if(newBill.getOffer() != null)
+			bill.setOffer(newBill.getOffer());
+		if(newBill.isPaymentCancelled() == true) {
+			bill.setPaymentCancelled(true);
+			bill.setOffer(offerService.changeAvailableBoughtOfferCancelled(bill.getOffer().getId()));
+		} else
+			bill.setPaymentCancelled(false);
+		if(newBill.getBillCreated() != null)
+			bill.setBillCreated(newBill.getBillCreated());
+		
+		return billRepository.save(bill);
+		
+	}
 	
 	
 	// DB
