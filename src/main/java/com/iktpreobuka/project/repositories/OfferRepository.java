@@ -11,8 +11,10 @@ public interface OfferRepository extends CrudRepository <OfferEntity, Integer>{
 	
 	// možda bi radilo i bez QUERY, proveriti dokumentaciju
 	@Query("select o from OfferEntity o where o.regularPrice < :upperPrice and o.regularPrice > :lowerPrice")
-	public List<OfferEntity> findByPriceBetween(Double lowerPrice, Double upperPrice);
+	public List<OfferEntity> findByPriceBetween(Double discountPrice, Double regularPrice);
 
 	public List<OfferEntity> findAllByCategoryId(Integer categoryId);
+
+	public List<OfferEntity> findByDiscountPriceBetween(Double discountPrice, Double regularPrice);
 
 }
