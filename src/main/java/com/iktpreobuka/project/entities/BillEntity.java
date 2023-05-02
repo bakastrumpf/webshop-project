@@ -10,6 +10,8 @@ package com.iktpreobuka.project.entities;
  */
 
 import java.time.LocalDate;
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -133,8 +135,8 @@ public class BillEntity {
 	}
 
 
-	public void setBillCreated(LocalDate billCreated) {
-		this.billCreated = billCreated;
+	public void setBillCreated(LocalDate date) {
+		this.billCreated = date;
 	}
 
 
@@ -185,6 +187,18 @@ public class BillEntity {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+
+
+	public boolean isPaymentCancelled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	public boolean isPaymentMade() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	
