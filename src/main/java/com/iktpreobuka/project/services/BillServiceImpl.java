@@ -2,6 +2,10 @@ package com.iktpreobuka.project.services;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,9 @@ import jakarta.validation.Validation;
 
 @Service
 public class BillServiceImpl implements BillService {
+	
+	@PersistenceContext
+	private EntityManager em;
 	
 	@Autowired
 	BillRepository billRepository;
@@ -91,6 +98,29 @@ public class BillServiceImpl implements BillService {
 		}
 		return false;
 	}
+	
+	
+	@Override
+	public boolean activeBills() {
+		String sql = "select b from BillEntity b where b.paymentMade=0 and b.paymentCancelled=0";
+		Query query = em.createQuery(sql);
+		List<BillEntity> retVals = query.getResultList();
+		return retVals;
+	}
+	
+	
+	// da li postoje aktivni računi za datu kategoriju
+	// SJ
+	public boolean areBillsActiveBycategory(Integer categoryId) {
+		List<BillEntity> bills = billRepository.findAllByOfferCategoryId(categoryId);
+		for (BillEntity bill : bills) {
+			if (!bill.getPaymentMade() && !bill.getPaymentCancelled()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 	// TODO • 2.1 u servisu zaduženom za rad sa ponudama, napisati metodu koja za prosleđen ID ponude, vrši izmenu broja kupljenih/dostupnih ponuda
 
