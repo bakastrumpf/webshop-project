@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iktpreobuka.project.entities.CategoryEntity;
 import com.iktpreobuka.project.repositories.CategoryRepository;
+import com.iktpreobuka.project.services.BillService;
+import com.iktpreobuka.project.services.OfferService;
 
 @RestController
 @RequestMapping("/project/categories")
@@ -136,6 +138,21 @@ public class CategoryController {
 //	public CategoryEntity deleteCategory(@PathVariable Integer id) {
 //		return categoryService.deleteCategory(id);
 //	}
+	
+	// SJ
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+	public CategoryEntity removeCategory(@PathVariable Integer categoryId) {
+		if (categoryRepository.existsById(categoryId)) {
+			CategoryEntity category = categoryRepository.findById(categoryId).get();
+			boolean checkOffer = OfferService.ifCategoryHasNonExpOffers(categoryId);
+			boolean checkBill = BillService.areBillsActiveByCategory(categoryId);
+			if (checkOffer || checkBill) {
+				return null;
+			}
+			categoryRepository.delete(category);
+		}
+		return null;
+	}
 	
 	
 	
