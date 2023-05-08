@@ -16,5 +16,7 @@ public interface OfferRepository extends CrudRepository <OfferEntity, Integer>{
 	public List<OfferEntity> findAllByCategoryId(Integer categoryId);
 
 	public List<OfferEntity> findByDiscountPriceBetween(Double discountPrice, Double regularPrice);
+	
+	public OfferEntity findByBills(Integer billId);
 
 }
