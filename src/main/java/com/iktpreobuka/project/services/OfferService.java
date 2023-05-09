@@ -16,4 +16,8 @@ public interface OfferService {
 	
 	public boolean isOfferExpires(Integer categoryId);
 
+	public boolean ifCategoryHasNonExpOffers(Integer categoryId);
+	
+	public OfferEntity changeNoOffers(Integer id, Boolean paymentMade, Boolean paymentCancelled);
+
 }
