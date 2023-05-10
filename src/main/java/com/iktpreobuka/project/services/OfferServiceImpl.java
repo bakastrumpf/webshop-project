@@ -30,7 +30,6 @@ public class OfferServiceImpl implements OfferService {
 			offer.setBoughtOffers(offer.getBoughtOffers() -1);
 			offer.setAvailableOffers(offer.getAvailableOffers() +1);
 		}
-		
 	}
 
 	@Override
@@ -51,7 +50,6 @@ public class OfferServiceImpl implements OfferService {
 	public boolean hasCategoryNonExpirationOffers(Integer categoryId) {
 		
 		// VP
-		
 //		List<OfferEntity> offers = offerRepository.findAllByCategoryId(categoryId);
 //		LocalDate currentDate = LocalDate.now();
 //		for(OfferEntity offer : offers) {
@@ -60,9 +58,8 @@ public class OfferServiceImpl implements OfferService {
 //			}
 //		}
 //		return false;
-		
-		return false;
-		
+
+		return false;		
 	}
 
 	// DB
@@ -96,12 +93,13 @@ public class OfferServiceImpl implements OfferService {
 			LocalDate now = LocalDate.now();
 			for (OfferEntity offer : offers) {
 				if (offer.getOfferExpires().isAfter(now))
-					return true;
+					return true;					
 				return false;
 			}
 		}
 		return false;
 	}
+	
 	
 	// TODO • 3.3 ukoliko se ponuda proglasi isteklom potrebno je otkazati sve račune koji sadrže tu ponudu
 	// • u okviru servisa zaduženog za rad sa računima napisati metodu koja otkazuje sve račune odgovarajuće ponude
