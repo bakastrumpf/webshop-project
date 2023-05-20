@@ -142,15 +142,15 @@ public class CategoryController {
 	// SJ
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	public CategoryEntity removeCategory(@PathVariable Integer categoryId) {
-		if (categoryRepository.existsById(categoryId)) {
-			CategoryEntity category = categoryRepository.findById(categoryId).get();
-			boolean checkOffer = OfferService.ifCategoryHasNonExpOffers(categoryId);
-			boolean checkBill = BillService.areBillsActiveByCategory(categoryId);
-			if (checkOffer || checkBill) {
-				return null;
-			}
-			categoryRepository.delete(category);
-		}
+//		if (categoryRepository.existsById(categoryId)) {
+//			CategoryEntity category = categoryRepository.findById(categoryId).get();
+//			boolean checkOffer = OfferService.ifCategoryHasNonExpOffers(categoryId);
+//			boolean checkBill = BillService.areBillsActiveByCategory(categoryId);
+//			if (checkOffer || checkBill) {
+//				return null;
+//			}
+//			categoryRepository.delete(category);
+//		}
 		return null;
 	}
 	
