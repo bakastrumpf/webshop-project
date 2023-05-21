@@ -1,5 +1,6 @@
 package com.iktpreobuka.project.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -119,6 +120,30 @@ public class BillServiceImpl implements BillService {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public boolean areBillsActiveByCategory(Integer categoryId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<BillEntity> getAllBillsByDate(LocalDate startDate, LocalDate endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BillEntity> findAllByOfferCategoryId(Integer categoryId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BillEntity> findAllBillsByBuyer(Integer buyerId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
