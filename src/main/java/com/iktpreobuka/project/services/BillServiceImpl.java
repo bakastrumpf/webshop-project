@@ -106,7 +106,8 @@ public class BillServiceImpl implements BillService {
 		String sql = "select b from BillEntity b where b.paymentMade=0 and b.paymentCancelled=0";
 		Query query = em.createQuery(sql);
 		List<BillEntity> retVals = query.getResultList();
-		return retVals;
+		// return retVals;
+		return true;
 	}
 	
 	
