@@ -99,6 +99,18 @@ public class OfferServiceImpl implements OfferService {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean ifCategoryHasNonExpOffers(Integer categoryId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public OfferEntity changeNoOffers(Integer id, Boolean paymentMade, Boolean paymentCancelled) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	// TODO • 3.3 ukoliko se ponuda proglasi isteklom potrebno je otkazati sve račune koji sadrže tu ponudu
