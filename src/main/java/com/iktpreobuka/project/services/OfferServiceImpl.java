@@ -92,8 +92,8 @@ public class OfferServiceImpl implements OfferService {
 			List<OfferEntity> offers = offerRepository.findAllByCategoryId(categoryId);
 			LocalDate now = LocalDate.now();
 			for (OfferEntity offer : offers) {
-				if (offer.getOfferExpires().isAfter(now))
-					return true;					
+//				if (offer.getOfferExpires().isAfter(now))
+//					return true;					
 				return false;
 			}
 		}
