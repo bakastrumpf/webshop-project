@@ -23,6 +23,7 @@ import com.iktpreobuka.project.security.Views;
 import jakarta.validation.constraints.Size;
  
 /*
+VALIDACIJA
 1.3
 U klasi OfferEntity u okviru projekta dodati odgovarajuća ograničenja
 • nijedan od atributa ne sme imati null vrednost 

@@ -28,6 +28,7 @@ import jakarta.validation.constraints.Size;
 dok svi ostali atributi, sem id-a treba da budu tekstualnog tipa
 	 */
 /*
+VALIDACIJA
 1.1
 U klasi UserEntity u okviru projekta dodati odgovarajuća ograničenja
 • nijedan od atributa ne sme imati null vrednost (bez atributa role)

@@ -16,6 +16,7 @@ import com.iktpreobuka.project.security.Views;
 import jakarta.validation.constraints.Size;
 
 /*
+VALIDACIJA
 1.2 U klasi CategoryEntity u okviru projekta dodati odgovarajuća ograničenja
 • atribut categoryName ne sme da ima null vrednost
 • atribut categoryDescription ograničiti na maksimalno 50 karaktera

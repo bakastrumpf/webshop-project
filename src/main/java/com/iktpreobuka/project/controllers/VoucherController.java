@@ -1,7 +1,11 @@
 package com.iktpreobuka.project.controllers;
 
 public class VoucherController {
-	
+
+    // VALIDACIJA
+    // 1.7
+    // Izmeniti kontroler tako da koristi VoucherDTO prilikom pravljenja novog Voucher-a.
+
 	// TODO 4.3 u paketu com.iktpreobuka.project.controllers napraviti klasu VoucherController sa REST endpoint-om koji vraća listu svih vaučera
 	// putanja /project/vouchers
 	

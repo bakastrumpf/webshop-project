@@ -4,6 +4,11 @@ package com.iktpreobuka.project.controllers;
 • putanja /project/bills
  */
 
+/*
+VALIDACIJA
+1.5 Izmeniti kontroler tako da koristi BillDTO prilikom pravljenja novog Bill-a.
+ */
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;

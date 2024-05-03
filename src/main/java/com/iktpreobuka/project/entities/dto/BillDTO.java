@@ -1,6 +1,7 @@
 package com.iktpreobuka.project.entities.dto;
 
 /*
+VALIDACIJA
  * 1.4 Napraviti klasu BillDTO po ugledu na BillEntity u
 okviru projekta i dodati odgovarajuća ograničenja:
 • nijedan od atributa ne sme imati null vrednost (bez atributa datum

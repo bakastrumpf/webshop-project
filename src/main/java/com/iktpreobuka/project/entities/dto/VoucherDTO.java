@@ -1,7 +1,8 @@
 package com.iktpreobuka.project.entities.dto;
 
 /*
- * 1.6
+VALIDACIJA
+1.6
 Napraviti klasu VoucherDTO po ugledu na VoucherEntity u okviru projekta i dodati odgovarajuća
 ograničenja:
 • nijedan od atributa ne sme imati null vrednost
