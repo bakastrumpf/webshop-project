@@ -297,6 +297,13 @@ public class UserController {
 	public List<UserEntity> getAdmin(){
 		return (List<UserEntity>) userRepository.findAll();
 	}
-	
-	
+
+
+	// TODO	• 2.2 potrebno je u metodama kontrolera kreiranim na prethodnim časovima promeniti povratne vrednosti
+	//• koristiti klasu ResponseEntity<T>
+	//• u slučaju HTTP 200 vratiti telo odgovora i kod 200
+	//• u slučaju greške vratiti odgovarajući kod i poruku greške
+	// projekti: serijalizacija i validacija
+
+
 }

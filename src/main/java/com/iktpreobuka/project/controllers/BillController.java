@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iktpreobuka.project.entities.BillEntity;
-import com.iktpreobuka.project.entities.UserEntity;
 import com.iktpreobuka.project.repositories.BillRepository;
 import com.iktpreobuka.project.repositories.CategoryRepository;
 import com.iktpreobuka.project.repositories.OfferRepository;
@@ -270,5 +269,22 @@ public class BillController {
 	// TODO• 4.1 omogućiti kreiranje vaučera kada se atribut računa paymentMade postavi na true
 	// • u okviru servisa zaduženog za rad sa vaučerima, napisati metodu koja vrši kreiranje vaučera na osnovu prosleđenog računa
 	// • pozvati je u okviru metode za izmenu računa u BillController-u
-	
+
+
+	// TODO	• 2.2 potrebno je u metodama kontrolera kreiranim na prethodnim časovima promeniti povratne vrednosti
+	//• koristiti klasu ResponseEntity<T>
+	//• u slučaju HTTP 200 vratiti telo odgovora i kod 200
+	//• u slučaju greške vratiti odgovarajući kod i poruku greške
+	// projekti: serijalizacija i validacija
+
+
+
+	//TODO • 3.4 kreirati REST endpoint u klasi BillController za izveštaj za ukupnu prodaju po danima
+	//• putanja /project/bills/generateReportByDate/{startDate}/and/{endDate}
+	//• iskoristiti prethodno kreirane DTO-ve
+
+	// TODO	• 3.5 kreirati REST endpoint u klasi BillController za izveštaj o prodaji po kategoriji
+	//• putanja /project/bills/generateReport/{startDate}/and/{endDate}/category/{categoryId}
+	//• iskoristiti prethodno kreirane DTO-ve
+
 }

@@ -249,4 +249,11 @@ public class OfferController {
 	// • u okviru servisa zaduženog za rad sa računima napisati metodu koja otkazuje sve račune odgovarajuće ponude
 	// • pozvati je u okviru metode za promenu statusa ponude u	OfferController-u
 
+
+	// TODO	• 2.2 potrebno je u metodama kontrolera kreiranim na prethodnim časovima promeniti povratne vrednosti
+	//• koristiti klasu ResponseEntity<T>
+	//• u slučaju HTTP 200 vratiti telo odgovora i kod 200
+	//• u slučaju greške vratiti odgovarajući kod i poruku greške
+	// projekti: serijalizacija i validacija
+
 }

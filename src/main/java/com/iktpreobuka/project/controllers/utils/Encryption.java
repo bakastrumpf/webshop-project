@@ -1,4 +1,4 @@
-package com.iktpreobuka.project.utils;
+package com.iktpreobuka.project.controllers.utils;
 
 public class Encryption {
 

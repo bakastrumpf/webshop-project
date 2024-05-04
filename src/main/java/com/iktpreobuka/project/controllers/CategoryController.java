@@ -181,6 +181,12 @@ public class CategoryController {
 	// (kategoriju koja želi da se obriše)
 	// • napisati metodu u servisu zaduženom za rad sa računima koja proverava da li postoje aktivni računi za datu kategoriju
 	// • pozvati prethodno kreirane metode u metodi za brisanje kategorije u okviru CategoryController-a
-	
+
+
+	// TODO	• 2.2 potrebno je u metodama kontrolera kreiranim na prethodnim časovima promeniti povratne vrednosti
+	//• koristiti klasu ResponseEntity<T>
+	//• u slučaju HTTP 200 vratiti telo odgovora i kod 200
+	//• u slučaju greške vratiti odgovarajući kod i poruku greške
+	// projekti: serijalizacija i validacija
 
 }

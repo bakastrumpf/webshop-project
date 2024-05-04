@@ -28,7 +28,14 @@ public class VoucherController {
 	
 	
 	
-	// 4.9 kreirati REST endpoint za pronalazak svih vaučera koji nisu istekli
+	// TODO 4.9 kreirati REST endpoint za pronalazak svih vaučera koji nisu istekli
 	// putanja /project/vouchers/findNonExpiredVoucher
 
+
+
+    // TODO	• 2.2 potrebno je u metodama kontrolera kreiranim na prethodnim časovima promeniti povratne vrednosti
+    //• koristiti klasu ResponseEntity<T>
+    //• u slučaju HTTP 200 vratiti telo odgovora i kod 200
+    //• u slučaju greške vratiti odgovarajući kod i poruku greške
+    // projekti: serijalizacija i validacija
 }
