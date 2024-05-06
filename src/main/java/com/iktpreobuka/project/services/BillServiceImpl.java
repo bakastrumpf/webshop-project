@@ -125,34 +125,33 @@ public class BillServiceImpl implements BillService {
 
 	@Override
 	public boolean areBillsActiveByCategory(Integer categoryId) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public List<BillEntity> getAllBillsByDate(LocalDate startDate, LocalDate endDate) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<BillEntity> findAllByOfferCategoryId(Integer categoryId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<BillEntity> findAllBillsByBuyer(Integer buyerId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	
-	// TODO • 2.1 u servisu zaduženom za rad sa ponudama, napisati metodu koja za prosleđen ID ponude, vrši izmenu broja kupljenih/dostupnih ponuda
+	// TODO • 2.1 u servisu zaduženom za rad sa ponudama, napisati metodu koja
+	//  za prosleđen ID ponude, vrši izmenu broja kupljenih/dostupnih ponuda
 
 	
-	// TODO • 2.4 u servisu zaduženom za rad sa računima, napisati metodu koja za prosleđene datume vraća račune koji se nalaze u datom periodu
-	// • pozvati je u okviru metode BillController-a za pronalazak svih računa koji su kreirani u odgovarajućem vremenskom periodu
+	// TODO • 2.4 u servisu zaduženom za rad sa računima, napisati metodu koja
+	//  za prosleđene datume vraća račune koji se nalaze u datom periodu
+	// • pozvati je u okviru metode BillController-a
+	// za pronalazak svih računa koji su kreirani u odgovarajućem vremenskom periodu
 	
 	
 }
