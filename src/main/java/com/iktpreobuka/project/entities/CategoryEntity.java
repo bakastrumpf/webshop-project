@@ -2,11 +2,7 @@ package com.iktpreobuka.project.entities;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -22,6 +18,7 @@ VALIDACIJA
 • atribut categoryDescription ograničiti na maksimalno 50 karaktera
  */
 
+@Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class CategoryEntity {
 	
