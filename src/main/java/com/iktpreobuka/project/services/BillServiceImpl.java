@@ -1,13 +1,23 @@
 package com.iktpreobuka.project.services;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.iktpreobuka.project.controllers.utils.RESTError;
+import com.iktpreobuka.project.entities.dto.BillDTO;
+import com.iktpreobuka.project.entities.dto.ReportDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.iktpreobuka.project.entities.BillEntity;
@@ -18,6 +28,10 @@ import com.iktpreobuka.project.repositories.OfferRepository;
 import com.iktpreobuka.project.repositories.UserRepository;
 
 import jakarta.validation.Validation;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class BillServiceImpl implements BillService {
@@ -98,6 +112,18 @@ public class BillServiceImpl implements BillService {
 			}
 		}
 		return false;
+
+		// NM
+		// List<BillEntity> bills = billRepository.findByOfferCategoryId(categoryId);
+		// if (billRepository.findByOfferCategoryId(categoryId) != null)
+		// for (BillEntity bill : bills) {
+		// if (!bill.getPaymentMade() && !bill.getPaymentCancelled()) {
+		// return true;
+		// }
+		// }
+		// return false;
+		// }
+
 	}
 	
 	
@@ -113,18 +139,13 @@ public class BillServiceImpl implements BillService {
 	
 	// da li postoje aktivni računi za datu kategoriju
 	// SJ
-	public boolean areBillsActiveBycategory(Integer categoryId) {
+	public boolean areBillsActiveByCategory(Integer categoryId) {
 		List<BillEntity> bills = billRepository.findAllByOfferCategoryId(categoryId);
 		for (BillEntity bill : bills) {
 			if (!bill.getPaymentMade() && !bill.getPaymentCancelled()) {
 				return true;
 			}
 		}
-		return false;
-	}
-
-	@Override
-	public boolean areBillsActiveByCategory(Integer categoryId) {
 		return false;
 	}
 
@@ -147,11 +168,82 @@ public class BillServiceImpl implements BillService {
 	// TODO • 2.1 u servisu zaduženom za rad sa ponudama, napisati metodu koja
 	//  za prosleđen ID ponude, vrši izmenu broja kupljenih/dostupnih ponuda
 
+
+	public ResponseEntity<?> createBillWithOfferAndBuyer(@PathVariable Integer offerId,
+														 @PathVariable Integer buyerId,
+														 @DateTimeFormat(iso = ISO.DATE) @RequestBody BillDTO newBill,
+														 BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return new ResponseEntity<>(createErrorMessage(bindingResult), HttpStatus.BAD_REQUEST);
+		}
+		if (offerRepository.existsById(offerId)) {
+			if (userRepository.existsById(buyerId)) {
+				UserEntity user = userRepository.findById(buyerId).get();
+				OfferEntity offer = offerService.changeAvailableOffers(offerId);
+				BillEntity bill = new BillEntity();
+				bill.setUser(user);
+				bill.setOffer(offer);
+				bill.setPaymentMade(true);
+				bill.setPaymentCancelled(newBill.getPaymentMade());
+				bill.setPaymentCancelled(newBill.getPaymentCancelled());
+				bill.setBillCreated(newBill.getBillCreated());
+				billRepository.save(bill);
+				return new ResponseEntity<BillEntity>(bill, HttpStatus.CREATED);
+			}
+		}
+		return new ResponseEntity<RESTError>(new RESTError(1, "Bill not found"), HttpStatus.NOT_FOUND);
+	}
+
+	private String createErrorMessage(BindingResult bindingResult) {
+		return bindingResult.getAllErrors()
+				.stream()
+				.map(ObjectError::getDefaultMessage)
+				.collect(Collectors.joining(" \n"));
+	}
+
 	
 	// TODO • 2.4 u servisu zaduženom za rad sa računima, napisati metodu koja
 	//  za prosleđene datume vraća račune koji se nalaze u datom periodu
 	// • pozvati je u okviru metode BillController-a
 	// za pronalazak svih računa koji su kreirani u odgovarajućem vremenskom periodu
 	
-	
+
+	@Override
+	public List<BillEntity> cancelBillsWithExpiredOffer(Integer offerId) {
+		List<BillEntity> bills = billRepository.findByOfferId(offerId);
+		for (BillEntity bill : bills ) {
+			bill.setPaymentCancelled(true);
+			bill.setPaymentMade(false);
+			billRepository.save(bill);
+		}
+		return bills;
+	}
+
+	// NM
+	public ResponseEntity<?> generateReportByDate(@PathVariable String startDate, @PathVariable String endDate) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		LocalDate start = LocalDate.parse(startDate, formatter);
+		LocalDate end = LocalDate.parse(endDate, formatter);
+		ReportDTO reportDTO = new ReportDTO();
+		reportDTO.setSumOfIncomes(0.00);
+		reportDTO.setTotalNumberOfSoldOffers(0);
+		reportDTO.setReportItemDTO(new ArrayList<ReportItem>());
+		for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
+			ReportItem report = new ReportItem();
+			List<BillEntity> bills = billRepository.findByBillCreated(date);
+			report.setDate(date);
+			int numOfOffers = 0;
+			double income = 0;
+			for (BillEntity bill : bills) {
+				numOfOffers++;
+				income += bill.getOffer().getDiscountPrice();
+			}
+			report.setNumberOfOffers(numOfOffers);
+			report.setIncome(income);
+			reportDTO.getReportItemDTO().add(Report);
+			reportDTO.setSumOfIncomes(reportDTO.getSumOfIncomes() + reportDTO.getIncome());
+			reportDTO.setTotalNumberOfSoldOffers(reportDTO.totalNumberOfSoldOffers) + report.getNumberOfOffers();
+		}
+		return new ResponseEntity<ReportDTO>(reportDTO, HttpStatus.OK);
+	}
 }
