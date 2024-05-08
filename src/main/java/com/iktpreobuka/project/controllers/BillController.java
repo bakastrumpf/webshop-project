@@ -11,19 +11,16 @@ VALIDACIJA
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import com.iktpreobuka.project.controllers.utils.RESTError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.iktpreobuka.project.entities.BillEntity;
 import com.iktpreobuka.project.repositories.BillRepository;
@@ -210,11 +207,20 @@ public class BillController {
 	}
 	
 	// SJ
-	@RequestMapping(method = RequestMethod.GET, value = "/{buyerId2}")
+	@RequestMapping(method = RequestMethod.GET, value = "2/{buyerId}")
 	public List<BillEntity> getAllBillsByBuyer(@PathVariable Integer buyerId) {
 		return billService.findAllBillsByBuyer(buyerId);
 	}
-	
+
+	//NM
+	@RequestMapping(method = RequestMethod.GET, value = "3/{buyerId}")
+	public ResponseEntity<?> findBillByBuyer(@PathVariable Integer buyerId) {
+		if (billRepository.existsById(buyerId)) {
+			Iterable<BillEntity> bills = billRepository.findByBuyerId(buyerId);
+			return new ResponseEntity<>(bills, HttpStatus.OK);
+		}
+		return new ResponseEntity<RESTError>(new RESTError(1, "List of bills not found."), HttpStatus.NOT_FOUND);
+	}
 	
 	// TODO 3.8 kreirati REST endpoint za pronalazak svih računa određene kategorije
 	// putanja /project/bills/findByCategory/{categoryId}
@@ -286,10 +292,15 @@ public class BillController {
 	// projekti: serijalizacija i validacija
 
 
-
+	// NM
 	//TODO • 3.4 kreirati REST endpoint u klasi BillController za izveštaj za ukupnu prodaju po danima
 	//• putanja /project/bills/generateReportByDate/{startDate}/and/{endDate}
 	//• iskoristiti prethodno kreirane DTO-ve
+	@GetMapping(path = "/generateReportByDate/{startDate}/and/{endDate}")
+	public ResponseEntity<?> generateReportByDate(@PathVariable String startDate, @PathVariable String endDate){
+		return billService.generateReportByDate(startDate, endDate);
+	}
+
 
 	// TODO	• 3.5 kreirati REST endpoint u klasi BillController za izveštaj o prodaji po kategoriji
 	//• putanja /project/bills/generateReport/{startDate}/and/{endDate}/category/{categoryId}
