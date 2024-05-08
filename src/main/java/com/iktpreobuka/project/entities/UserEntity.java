@@ -65,6 +65,8 @@ public class UserEntity {
 	@JsonIgnore
 	@Column(nullable = false)
 	@Min(value = 5, message = "Password must contain at least 5 characters")
+	// + u regeksu znači da ono u zagradi mora da se ponavlja onoliko puta koliko smo definisali u MIN
+	// @Pattern(regexp = "[_A-Za-z0-9]+", message="Password must consist of letters and numbers.")
 	@Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$",
 			message="Password must consist of letters and numbers.")
 	protected String password;
@@ -249,12 +251,14 @@ public class UserEntity {
 		this.bill = bill;
 	}
 
-
+	// JsonIgnore might help not to display all offers + vouchers loop
+	// @JsonIgnore
 	public List<VoucherEntity> getVoucher() {
 		return voucher;
 	}
 
-
+	// JsonIgnore might help not to display all offers + vouchers loop
+	// @JsonIgnore
 	public void setVoucher(List<VoucherEntity> voucher) {
 		this.voucher = voucher;
 	}

@@ -70,7 +70,7 @@ public class VoucherController {
     @DeleteMapping(path = "/{id}")
     public VoucherEntity removeVoucher(@PathVariable Integer id) throws Exception {
         if (voucherRepository.existsById(id)) {
-            voucherEntity voucher = voucherRepository.findById(id).get();
+            VoucherEntity voucher = voucherRepository.findById(id).get();
             voucherRepository.delete(voucher);
             return voucher;
         }

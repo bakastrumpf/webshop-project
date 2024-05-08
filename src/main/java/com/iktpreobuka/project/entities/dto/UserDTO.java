@@ -7,7 +7,6 @@ import javax.persistence.Column;
 public class UserDTO {
 
 // TODO    • 3.6 kreirati UserDto za potrebe kreiranja naloga korisnika
-//    atributi:
 //• first name, last name, username, password, repeatedPassword, email
 //• odgovarajući geteri i seteri i konstruktor bez parametara
 //• zameniti u odgovarajućoj metodi UserController-a User sa UserDto

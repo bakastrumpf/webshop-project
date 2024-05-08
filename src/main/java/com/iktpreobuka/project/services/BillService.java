@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.iktpreobuka.project.entities.BillEntity;
+import com.iktpreobuka.project.entities.dto.BillDTO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 
 public interface BillService {
 	
@@ -23,4 +26,7 @@ public interface BillService {
 
 	public List<BillEntity> findAllBillsByBuyer(Integer buyerId);
 
+	ResponseEntity<?> generateReportByDate(String startDate, String endDate);
+
+	ResponseEntity<?> createBillWithOfferAndBuyer(Integer offerId, Integer buyerId, BillDTO bill, BindingResult bindingResult);
 }

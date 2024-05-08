@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.iktpreobuka.project.security.Views;
 
@@ -26,6 +27,7 @@ import com.iktpreobuka.project.security.Views;
 	 */
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class VoucherEntity {
 	
 	@Id
@@ -61,6 +63,8 @@ public class VoucherEntity {
 	@JsonView(Views.Private.class)
 	private UserEntity user;
 	
+	@ManyToOne
+	@JoinColumn(name = "bill_id")
 	@JsonView(Views.Admin.class)
 	private BillEntity bill;
 	

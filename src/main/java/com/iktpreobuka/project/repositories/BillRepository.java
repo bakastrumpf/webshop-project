@@ -17,4 +17,5 @@ public interface BillRepository extends CrudRepository <BillEntity, Integer> {
 	public List<BillEntity> findAllByOfferCategoryId(Integer categoryId);
 	public List<BillEntity> findByBillCreatedBetween(LocalDate startDate, LocalDate endDate);
 
+    List<BillEntity> findByOfferId(Integer offerId);
 }
