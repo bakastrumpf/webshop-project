@@ -15,11 +15,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.iktpreobuka.project.controllers.utils.RESTError;
+import com.iktpreobuka.project.entities.dto.BillDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.iktpreobuka.project.entities.BillEntity;
@@ -256,14 +259,33 @@ public class BillController {
 	
 	// TODO 5.1 proširiti metodu za dodavanje računa tako da se smanji broj dostupnih ponuda ponude sa računa, 
 	// odnosno poveća broj kupljenih
+	@PostMapping(path = "/{offerId}/buyer/{buyerId}")
+	public ResponseEntity<?> createBillWithOfferAndBuyer(@PathVariable Integer offerId,
+														 @PathVariable Integer buyerId,
+														 @Valid @RequestBody BillDTO bill,
+														 BindingResult bindingResult) throws Exception {
+		return billService.createBillWithOfferAndBuyer(offerId, buyerId, bill, bindingResult);
+	}
 	
 	
-	
-	// TODO 5.2 proširiti metodu za izmenu računa tako da ukoliko se račun proglašava otkazanim 
-	// tada treba povećati broj	dostupnih ponuda ponude sa računa, 
-	// odnosno smanjiti broj kupljenih
-	
-	
+	// TODO 5.2 proširiti metodu za izmenu računa tako da
+	//  ukoliko se račun proglašava otkazanim treba povećati broj dostupnih ponuda ponude sa računa,
+	// i smanjiti broj kupljenih
+	@PutMapping(path = "/{id}")
+	public ResponseEntity<?> updateBill(@PathVariable Integer id,
+										@DateTimeFormat(iso = ISO.DATE) @Valid @RequestBody BillEntity updatedBill) throws Exception {
+		return billService.updateBill(id, updatedBill);
+	}
+
+	@DeleteMapping(path = "/{id}")
+	public ResponseEntity<?> removeOneBill(@PathVariable Integer id) {
+		if (billRepository.existsById(id)) {
+			BillEntity bill = billRepository.findById(id).get();
+			billRepository.delete(bill);
+			return new ResponseEntity<>(bill, HttpStatus.OK);
+		}
+		return new ResponseEntity<RESTError>(new RESTError(1, "Bill not found."), HttpStatus.NOT_FOUND);
+	}
 	
 	// TODO • 2.2 u metodi za dodavanje računa u okviru BillController-a potrebno je za izmenu broja dostupnih/kupljenih ponuda
 	// pozvati odgovarajuću metodu servisa zaduženog za rad sa ponudama
