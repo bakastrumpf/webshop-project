@@ -16,6 +16,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,12 +57,18 @@ public class BillController {
 	
 	@Autowired
 	private OfferService offerService;
-	
-	
+
 	@RequestMapping(method = RequestMethod.GET, path = "/")
-	public List<BillEntity> getAll() {
-		return (List<BillEntity>) billRepository.findAll();
+	public ResponseEntity<?> getAll() {
+		return new ResponseEntity<Iterable<BillEntity>>(billRepository.findAll(), HttpStatus.OK);
 	}
+
+//	@RequestMapping(method = RequestMethod.GET, path = "/")
+//	public List<BillEntity> getAll() {
+//		return (List<BillEntity>) billRepository.findAll();
+//	}
+
+
 	
 	// TODO: svu logiku iz kontrolera prebaciti u servis!!! 
 	
